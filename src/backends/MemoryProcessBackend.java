@@ -1,6 +1,6 @@
 package backends;
 
-import clientserver.CacheClient;
+import client.CacheClient;
 
 public class MemoryProcessBackend implements CacheBackend {
 	
@@ -9,25 +9,25 @@ public class MemoryProcessBackend implements CacheBackend {
 	@Override
 	public boolean set(String key, String serializedObj) {
 
-		return client.setData(key, serializedObj);
+		return client.set(key, serializedObj);
 	}
 
 	@Override
 	public boolean set(String key, String serializedObj, int timeout) {
 
-		return client.setData(key, serializedObj);
+		return client.set(key, serializedObj);
 	}
 
 	@Override
 	public String get(String key) {
 		
-		return client.getData(key);
+		return client.get(key);
 	}
 
 	@Override
 	public boolean delete(String key) {
 		
-		return client.deleteData(key);
+		return client.delete(key);
 	}
 
 }
