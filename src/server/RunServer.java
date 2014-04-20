@@ -13,10 +13,7 @@ public class RunServer {
 	 */
 	public static void main(String[] args) throws IOException {
 		
-		int debug = 1;
-		int production = 0;
-		
-		ServerLogger.getInstance().setLevel(debug);
+		ServerLogger.setLevel(Logger.PRODUCTION);
 		
 		CacheDeamon deamon = CacheDeamon.getInstance();
 		deamon.serverForever();

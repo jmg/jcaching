@@ -1,15 +1,15 @@
 package client;
 
 import java.io.BufferedReader;
-import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+import protocol.Protocol;
+
 import utils.ClientLogger;
-import utils.Logger;
 
 public class CacheClient {
 	
@@ -21,8 +21,6 @@ public class CacheClient {
 	
 	DataOutputStream os;
 	BufferedReader is;
-	
-	Logger logger = ClientLogger.getInstance();
 	
 	public CacheClient() {
 		
@@ -36,27 +34,27 @@ public class CacheClient {
 	
 	public String get(String key) {
 		                
-		return sendMessage("GET", key);      			
+		return sendMessage("GET", key, null);      			
 	}
 	
 	public boolean set(String key, String data) {
 		
-		return sendMessage("SET", key) == "ok";
+		return sendMessage("SET", key, data).equals("ok");
 	}
 
 	public boolean delete(String key) { 
 		
-		return sendMessage("DELETE", key) == "ok";		
+		return sendMessage("DELETE", key, null).equals("ok");		
 	}
 
-	private String sendMessage(String action, String key) {
+	private String sendMessage(String action, String key, String data) {
 		
 		String response = null;
 		try {
 			
 			getConnection();
 			
-			writeMessage(action, key);
+			writeMessage(action, key, data);
 			response = readMessage();
 			
 			closeConnection();
@@ -75,18 +73,18 @@ public class CacheClient {
         client.close();
 	}
 
-	private void writeMessage(String action, String key) throws IOException {
+	private void writeMessage(String action, String key, String data) throws IOException {
 				
-		String message = action + " " + key + " END\n";
-		
+		String message = Protocol.buildMessage(action, key, data); 				
         os.writeBytes(message);
-        logger.log("Wrote: " + message);
+        
+        ClientLogger.log("Wrote: " + message);
 	}
 	
 	private String readMessage() throws IOException {		
 		
-        String response = is.readLine();		
-		logger.log("Read: " + response);
+        String response = is.readLine();
+        ClientLogger.log("Read: " + response);
 	    
 	    return response;
 	}

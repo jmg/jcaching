@@ -1,16 +1,15 @@
 package server;
 
 import java.io.BufferedReader;
-import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-import utils.Logger;
+import protocol.Message;
+import protocol.Protocol;
+
 import utils.ServerLogger;
 
 public class CacheDeamon {
@@ -23,8 +22,8 @@ public class CacheDeamon {
 	DataOutputStream os;
 	BufferedReader is;
 		
-	static CacheDeamon instance;
-	Logger logger = ServerLogger.getInstance();
+	static CacheDeamon instance;	
+	private boolean running = false;
 	
 	private CacheDeamon() {
 						
@@ -46,14 +45,19 @@ public class CacheDeamon {
 	}
 	
 	public void serverForever() {
+				
+		if (running) {
+			return;
+		}
+		running = true;
 			
 		try {
 			server = new ServerSocket(port);
-			logger.log("Cache server running on: " + port.toString());
+			ServerLogger.log("Cache server running on: " + port.toString());
 			
-		} catch (IOException e1) {
+		} catch (IOException e) {
  
-			e1.printStackTrace();
+			e.printStackTrace();
 		}
 		
 		while(true) {
@@ -61,9 +65,9 @@ public class CacheDeamon {
 			try {
 			
 				acceptConnections();
-				
-				String message = readMessage();
-				writeMessage("response");
+								
+				Message message = Protocol.parseMessage(readMessage());			
+				writeMessage(Protocol.buildResponse(message));
 				
 				closeConnection();	
 			
@@ -93,7 +97,7 @@ public class CacheDeamon {
 		
 		client = server.accept();
 		
-		logger.log("Connection received from " + client.getInetAddress().getHostName());
+		ServerLogger.log("Connection received from " + client.getInetAddress().getHostName());
 		
 		is = new BufferedReader(new InputStreamReader(client.getInputStream()));
 		os = new DataOutputStream(client.getOutputStream());
@@ -102,7 +106,7 @@ public class CacheDeamon {
 	private String readMessage() throws IOException {			
 		
 	    String response = is.readLine();
-	    logger.log("Read: " + response);
+	    ServerLogger.log("Read: " + response);
 	    
 	    return response;
 	}
@@ -117,6 +121,6 @@ public class CacheDeamon {
 	void writeMessage(String message) throws IOException {
 		
         os.writeBytes(message);        
-        logger.log("Wrote: " + message);                
+        ServerLogger.log("Wrote: " + message);                
     }
 }

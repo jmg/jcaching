@@ -2,23 +2,31 @@ package utils;
 
 public class Logger {
 	
-	private int level = 0;	
+	protected static int level = 0;
 	
+	public static int DEBUG = 1;
+	public static int PRODUCTION = 0;
+	
+	public static void setLevel(int level) {
+		
+		Logger.level = level;
+	}
+	
+	public static int getLevel() {
+		
+		return level;
+	}
+		
 	public String getOrigin() {
 		
 		return "";
 	}
-
-	public void setLevel(int level) {
-				
-		this.level = level;
-	}
 	
-	public void log(Object obj) {
+	public void doLog(int level, Object obj) {
 		
-		if (level > 0) {			
-			System.out.println(this.getOrigin() + " -> " + obj.toString());
+		if (Logger.level > PRODUCTION) {
+			
+			System.out.println(getOrigin() + obj.toString());
 		}
-	}
-	
+	}	
 }
