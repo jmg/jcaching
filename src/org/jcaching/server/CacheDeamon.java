@@ -1,4 +1,4 @@
-package server;
+package org.jcaching.server;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;

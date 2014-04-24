@@ -1,4 +1,4 @@
-package protocol;
+package org.jcaching.protocol;
 
 import server.Storage;
 

@@ -1,4 +1,4 @@
-package tests;
+package org.jcaching.tests;
 
 import org.junit.Test;
 import server.CacheDeamon;

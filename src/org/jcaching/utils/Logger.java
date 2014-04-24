@@ -1,4 +1,4 @@
-package utils;
+package org.jcaching.utils;
 
 public class Logger {
 	
