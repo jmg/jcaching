@@ -1,4 +1,4 @@
-package backends;
+package org.jcaching.backends;
 
 import client.CacheClient;
 

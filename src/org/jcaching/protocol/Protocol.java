@@ -1,4 +1,4 @@
-package protocol;
+package org.jcaching.protocol;
 
 public class Protocol {
 	
