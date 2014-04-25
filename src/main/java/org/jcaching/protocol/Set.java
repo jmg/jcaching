@@ -11,7 +11,7 @@ import org.jcaching.server.Storage;
 /**
  * TODO description
  */
-public class Set extends Action {
+public class Set implements Action {
 
     /**
      * Default constructor.
@@ -26,7 +26,7 @@ public class Set extends Action {
     @Override
     public String execute(Message message) {
 
-        Storage.set(message.getKey(), message.getValue());
+        Storage.getInstance().set(message.getKey(), message.getValue());
         return "ok";
     }
 

@@ -14,6 +14,7 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 import org.jcaching.protocol.Protocol;
+import org.jcaching.settings.MemoryProcessSettings;
 import org.jcaching.utils.ClientLogger;
 
 /**
@@ -28,12 +29,15 @@ public class CacheClient {
     
     DataOutputStream os;
     BufferedReader is;
+    Protocol protocol;
     
     /**
      * {@inheritDoc}
      * @see Object#CacheClient()
      */
     public CacheClient() {
+    	
+    	initialize();
     }
     
     /**
@@ -44,6 +48,17 @@ public class CacheClient {
     public CacheClient(int port) {
         
         this.port = port;
+        initialize();
+    }
+    
+    /**
+     * Private constructor.
+     *
+     * @param port TODO
+     */
+    public void initialize() {
+    	
+    	protocol = MemoryProcessSettings.getProtocol();
     }
     
     /**
@@ -54,7 +69,7 @@ public class CacheClient {
      */
     public String get(String key) {
                         
-        return sendMessage("GET", key, null);               
+        return sendMessage(protocol.getGetAction(), key, null);               
     }
     
     /**
@@ -66,7 +81,7 @@ public class CacheClient {
      */
     public boolean set(String key, String data) {
         
-        return sendMessage("SET", key, data).equals("ok");
+        return sendMessage(protocol.getSetAction(), key, data).equals("ok");
     }
 
     /**
@@ -77,7 +92,7 @@ public class CacheClient {
      */
     public boolean delete(String key) { 
         
-        return sendMessage("DELETE", key, null).equals("ok");       
+        return sendMessage(protocol.getDeleteAction(), key, null).equals("ok");       
     }
 
     /**
@@ -95,8 +110,8 @@ public class CacheClient {
             
             getConnection();
             
-            writeMessage(action, key, data);
-            response = readMessage();
+            writeMessage(protocol.buildMessage(action, key, data));
+            response = protocol.parseResponse(readMessage());
             
             closeConnection();
             
@@ -128,9 +143,8 @@ public class CacheClient {
      *
      * @throws IOException TODO
      */
-    private void writeMessage(String action, String key, String data) throws IOException {
-                
-        String message = Protocol.buildMessage(action, key, data);              
+    private void writeMessage(String message) throws IOException {
+                               
         os.writeBytes(message);
         
         ClientLogger.log("Wrote: " + message);

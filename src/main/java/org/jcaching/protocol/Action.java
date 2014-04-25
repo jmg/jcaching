@@ -9,7 +9,7 @@ package org.jcaching.protocol;
 /**
  * TODO description
  */
-public abstract class Action {
+public interface Action {
     
     /**
      * TODO
@@ -17,5 +17,5 @@ public abstract class Action {
      * @param message TODO
      * @return TODO
      */
-    public abstract String execute(Message message);
+    public String execute(Message message);
 }

@@ -13,7 +13,7 @@ public class Message {
         
     private Action action;
     private String key;
-    private String value;   
+    private String value;       
     
     /**
      * Constructor.
@@ -22,15 +22,15 @@ public class Message {
      * @param key TODO
      * @param value TODO
      */
-    public Message(String action, String key, String value) {
+    public Message(String action, String key, String value, Protocol protocol) {
         super();
                 
         this.key = key;
-        this.value = value;
-        this.action = this.setAction(action);
-    }
+        this.value = value;        
+        this.action = this.setAction(action, protocol);        
+    }    
 
-    /**
+	/**
      * TODO
      *
      * @return TODO
@@ -79,18 +79,17 @@ public class Message {
      * TODO
      *
      * @param action TODO
+     * @param protocol 
      * @return TODO
      */
-    public Action setAction(String action) {
+    public Action setAction(String action, Protocol protocol) {
         
-        if (action.equals("GET")) {
-            return new Get();
-        } else if (action.equals("SET")) {
-            return new Set();
-        } else if (action.equals("DELETE")) {
-            return new Delete();
-        }
-        return null;
+        return protocol.getAction(action);
     }
+
+	public String execute(Message message) {
+		
+		return getAction().execute(message);
+	}
     
 }

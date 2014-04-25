@@ -46,8 +46,8 @@ public class MemoryProcessBackendTest extends TestCase {
     @Test
     public void testCacheGet() {
         
-        backend.set("key-1", "test");
-        assertEquals("test", backend.get("key-1"));
+        backend.set("key-1", "test value");
+        assertEquals("test value", backend.get("key-1"));
     }
     
     @Test
@@ -55,6 +55,6 @@ public class MemoryProcessBackendTest extends TestCase {
         
         backend.set("key-1", "test");
         assertEquals(true, backend.delete("key-1"));
-        assertEquals("null", backend.get("key-1"));
+        assertEquals(null, backend.get("key-1"));
     }
 }

@@ -11,7 +11,7 @@ import org.jcaching.server.Storage;
 /**
  * TODO description
  */
-public class Delete extends Action {
+public class Delete implements Action {
 
     /**
      * Default constructor.
@@ -26,7 +26,7 @@ public class Delete extends Action {
     @Override
     public String execute(Message message) {
         
-        Storage.delete(message.getKey());
+        Storage.getInstance().delete(message.getKey());
         return "ok";
     }
 }

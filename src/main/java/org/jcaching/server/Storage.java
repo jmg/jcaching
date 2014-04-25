@@ -8,32 +8,33 @@ package org.jcaching.server;
 
 import java.util.HashMap;
 
+
 /**
  * TODO
  */
-public class Storage {
-    
-    private static HashMap<String, String> storage = new HashMap<String, String>();
-    
-    /**
-     * TODO
-     *
-     * @return TODO
-     */
-    public static HashMap<String, String> getStorage() {
+public class Storage extends HashMap<String, String> {
         
-        return storage;
-    }
+	private static final long serialVersionUID = -7691679274906679651L;	   
+    private static Storage instance = null;
     
+    public static Storage getInstance() {
+		
+    	if (instance == null) {
+    		instance = new Storage();
+    	}
+    	
+    	return instance;
+	}
+        
     /**
      * TODO
      *
      * @param key TODO
      * @param value TODO
      */
-    public static void set(String key, String value) {
+    public void set(String key, String value) {
         
-        storage.put(key, value);
+        super.put(key, value);
     }
     
     /**
@@ -42,9 +43,9 @@ public class Storage {
      * @param key TODO
      * @return TODO
      */
-    public static String get(String key) {
-        
-        return storage.get(key);
+    public String get(String key) {
+        	
+        return super.get(key);
     }
     
     /**
@@ -52,8 +53,9 @@ public class Storage {
      *
      * @param key TODO
      */
-    public static void delete(String key) {
+    public void delete(String key) {
         
-        storage.remove(key);
+        super.remove(key);
     }
+
 }
