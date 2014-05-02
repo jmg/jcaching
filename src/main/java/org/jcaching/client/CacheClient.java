@@ -14,6 +14,7 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 import org.jcaching.protocol.Protocol;
+import org.jcaching.protocol.exception.InvalidActionException;
 import org.jcaching.settings.MemoryProcessSettings;
 import org.jcaching.utils.ClientLogger;
 
@@ -117,8 +118,10 @@ public class CacheClient {
             
         } catch (IOException e) { 
             e.printStackTrace();
+        } catch (InvalidActionException e) {
+            e.printStackTrace();
         }
-        
+ 
         return response;
     }
 

@@ -1,12 +1,26 @@
+/**
+ * MemoryProcessSettings
+ *
+ * TODO Description if available.
+ */
+
 package org.jcaching.settings;
 
 import org.jcaching.protocol.Protocol;
-import org.jcaching.protocol.SimpleProtocol;
+import org.jcaching.protocol.impl.SimpleProtocol;
 
+/**
+ * TODO
+ */
 public class MemoryProcessSettings {
-		
-	public static Protocol getProtocol() {
-		
-		return new SimpleProtocol();
-	}
+        
+    /**
+     * TODO
+     *
+     * @return TODO
+     */
+    public static Protocol getProtocol() {
+        
+        return new SimpleProtocol();
+    }
 }
