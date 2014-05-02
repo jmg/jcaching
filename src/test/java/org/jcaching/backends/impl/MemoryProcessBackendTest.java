@@ -9,9 +9,6 @@ package org.jcaching.backends.impl;
 import junit.framework.TestCase;
 
 import org.jcaching.server.CacheDeamon;
-import org.jcaching.utils.ClientLogger;
-import org.jcaching.utils.Logger;
-import org.jcaching.utils.ServerLogger;
 import org.junit.Test;
 
 /**
@@ -23,9 +20,6 @@ public class MemoryProcessBackendTest extends TestCase {
         
     public void setUp() {
                 
-        ClientLogger.setLevel(Logger.DEBUG);
-        ServerLogger.setLevel(Logger.DEBUG);
-        
         CacheDeamon.serverForeverInAThread();
         
         //Workaround: Wait until the server starts

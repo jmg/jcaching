@@ -16,12 +16,15 @@ import java.net.UnknownHostException;
 import org.jcaching.protocol.Protocol;
 import org.jcaching.protocol.exception.InvalidActionException;
 import org.jcaching.settings.MemoryProcessSettings;
-import org.jcaching.utils.ClientLogger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * TODO description
  */
 public class CacheClient {
+
+    private static Logger logger = LoggerFactory.getLogger(CacheClient.class);
     
     String host = "localhost";
     Integer port = 22122;
@@ -150,7 +153,7 @@ public class CacheClient {
                                
         os.writeBytes(message);
         
-        ClientLogger.log("Wrote: " + message);
+        logger.debug("Wrote: {}", message);
     }
     
     /**
@@ -163,7 +166,7 @@ public class CacheClient {
     private String readMessage() throws IOException {       
         
         String response = is.readLine();
-        ClientLogger.log("Read: " + response);
+        logger.debug("Read: {}", response);
         
         return response;
     }

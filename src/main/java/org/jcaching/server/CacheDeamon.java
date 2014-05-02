@@ -12,13 +12,16 @@ import java.net.Socket;
 
 import org.jcaching.protocol.Protocol;
 import org.jcaching.settings.MemoryProcessSettings;
-import org.jcaching.utils.ServerLogger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * TODO description
  */
 public class CacheDeamon {
     
+    private static Logger logger = LoggerFactory.getLogger(CacheDeamon.class);
+
     private static CacheDeamon instance;    
 
     private Integer port = 22122;
@@ -81,7 +84,7 @@ public class CacheDeamon {
             
         try {
             server = new ServerSocket(port);
-            ServerLogger.log("Cache server running on: " + port.toString());
+            logger.info("Cache server running on: {}", port.toString());
             
         } catch (IOException e) {
  
@@ -129,7 +132,7 @@ public class CacheDeamon {
     private Socket acceptConnections() throws IOException {
         
         Socket client = server.accept();        
-        ServerLogger.log("Connection received from " + client.getInetAddress().getHostName());
+        logger.info("Connection received from {}", client.getInetAddress().getHostName());
         
         return client;
     }
