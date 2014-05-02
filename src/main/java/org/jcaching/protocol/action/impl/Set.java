@@ -1,22 +1,24 @@
 /**
- * Delete
+ * Set
  *
  * TODO Description if available.
  */
 
-package org.jcaching.protocol;
+package org.jcaching.protocol.action.impl;
 
+import org.jcaching.protocol.Message;
+import org.jcaching.protocol.action.Action;
 import org.jcaching.server.Storage;
 
 /**
  * TODO description
  */
-public class Delete implements Action {
+public class Set implements Action {
 
     /**
      * Default constructor.
      */
-    public Delete() {
+    public Set() {
         super();
     }
 
@@ -25,8 +27,9 @@ public class Delete implements Action {
      */
     @Override
     public String execute(Message message) {
-        
-        Storage.getInstance().delete(message.getKey());
+
+        Storage.getInstance().set(message.getKey(), message.getValue());
         return "ok";
     }
+
 }

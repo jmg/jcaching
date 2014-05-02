@@ -4,8 +4,10 @@
  * TODO Description if available.
  */
 
-package org.jcaching.protocol;
+package org.jcaching.protocol.action.impl;
 
+import org.jcaching.protocol.Message;
+import org.jcaching.protocol.action.Action;
 import org.jcaching.server.Storage;
 
 /**
