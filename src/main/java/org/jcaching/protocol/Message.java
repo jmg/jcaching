@@ -6,6 +6,9 @@
 
 package org.jcaching.protocol;
 
+import org.jcaching.protocol.action.Action;
+import org.jcaching.protocol.exception.InvalidActionException;
+
 /**
  * TODO
  */
@@ -87,7 +90,7 @@ public class Message {
         return protocol.getAction(action);
     }
 
-	public String execute(Message message) {
+	public String execute(Message message) throws InvalidActionException {
 		
 		return getAction().execute(message);
 	}

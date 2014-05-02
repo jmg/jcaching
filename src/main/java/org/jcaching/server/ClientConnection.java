@@ -1,3 +1,9 @@
+/**
+ * ClientConnection
+ *
+ * TODO Description if available.
+ */
+
 package org.jcaching.server;
 
 import java.io.BufferedReader;
@@ -8,9 +14,13 @@ import java.net.Socket;
 
 import org.jcaching.protocol.Message;
 import org.jcaching.protocol.Protocol;
+import org.jcaching.protocol.exception.InvalidActionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * TODO
+ */
 public class ClientConnection extends Thread {
 
     private static Logger logger = LoggerFactory.getLogger(ClientConnection.class);
@@ -20,38 +30,51 @@ public class ClientConnection extends Thread {
 	private DataOutputStream os;	
 	private Protocol protocol;	
 
-	public ClientConnection(Socket client, Protocol protocol) throws IOException {
-		
-		this.client = client;
-		this.protocol = protocol;
-		
-		is = new BufferedReader(new InputStreamReader(client.getInputStream()));
+    /**
+     * Constructor.
+     *
+     * @param client TODO
+     * @param protocol TODO
+     * @throws IOException TODO
+     */
+    public ClientConnection(Socket client, Protocol protocol) throws IOException {
+        
+        this.client = client;
+        this.protocol = protocol;
+        
+        is = new BufferedReader(new InputStreamReader(client.getInputStream()));
         os = new DataOutputStream(client.getOutputStream());
-	}
-	
-	@Override
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void run() {
         
-		Message message;
-		try {
-			
-			message = protocol.parseMessage(readMessage());
-			writeMessage(protocol.buildResponse(message));	        
-	        closeConnection();
-	        
-		} catch (IOException e) {
-			e.printStackTrace();
-		}                   
+        Message message;
+        try {
+            
+            message = protocol.parseMessage(readMessage());
+            writeMessage(protocol.buildResponse(message));          
+            closeConnection();
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InvalidActionException e) {
+            e.printStackTrace();
+        }                   
+
     }
-	
-	/**
-    * TODO
-    *
-    * @return TODO
-    *
-    * @throws IOExceptiona TODO
-    */
-	private String readMessage() throws IOException {           
+    
+    /**
+     * TODO
+     *
+     * @return TODO
+     *
+     * @throws IOException TODO
+     */
+    private String readMessage() throws IOException {           
         
         String response = is.readLine();
         logger.debug("Read: {}", response);
@@ -69,8 +92,8 @@ public class ClientConnection extends Thread {
         os.close();
         is.close();
         client.close();
-	}
-	
+    }
+    
     /**
      * TODO
      *

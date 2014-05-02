@@ -4,8 +4,9 @@
  * TODO Description if available.
  */
 
-package org.jcaching.backends;
+package org.jcaching.backends.impl;
 
+import org.jcaching.backends.CacheBackend;
 import org.jcaching.client.CacheClient;
 
 /**

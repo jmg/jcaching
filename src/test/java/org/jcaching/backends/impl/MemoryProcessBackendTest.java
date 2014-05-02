@@ -4,11 +4,10 @@
  * TODO Description if available.
  */
 
-package org.jcaching;
+package org.jcaching.backends.impl;
 
 import junit.framework.TestCase;
 
-import org.jcaching.backends.MemoryProcessBackend;
 import org.jcaching.server.CacheDeamon;
 import org.junit.Test;
 
