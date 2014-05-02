@@ -8,9 +8,12 @@ import java.net.Socket;
 
 import org.jcaching.protocol.Message;
 import org.jcaching.protocol.Protocol;
-import org.jcaching.utils.ServerLogger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ClientConnection extends Thread {
+
+    private static Logger logger = LoggerFactory.getLogger(ClientConnection.class);
 	
 	private Socket client;
 	private BufferedReader is;
@@ -51,7 +54,7 @@ public class ClientConnection extends Thread {
 	private String readMessage() throws IOException {           
         
         String response = is.readLine();
-        ServerLogger.log("Read: " + response);
+        logger.debug("Read: {}", response);
         
         return response;
     }
@@ -78,6 +81,6 @@ public class ClientConnection extends Thread {
     void writeMessage(String message) throws IOException {
         
         os.writeBytes(message);        
-        ServerLogger.log("Wrote: " + message);                
+        logger.debug("Wrote: {}", message);                
     }
 }
