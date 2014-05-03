@@ -11,6 +11,7 @@ import org.jcaching.protocol.Protocol;
  */
 public class Config {
 	
+	private String IMPL_PACKAGE_PREFIX = "impl";
 	private static Config instance;	
 	HashMap<String, String> configValues = new HashMap<String, String>();
 	
@@ -54,12 +55,12 @@ public class Config {
 	
 	public CacheBackend getBackend() {
 		
-		return (CacheBackend) Loader.getNewInstance("org.jcaching.backends.impl", configValues.get("backend"));		
+		return (CacheBackend) Loader.newInstance(CacheBackend.class.getPackage().getName() + "." + IMPL_PACKAGE_PREFIX, configValues.get("backend"));		
 	}
 	
 	public Protocol getProtocol() {
 							
-		return (Protocol) Loader.getNewInstance("org.jcaching.protocol.impl", configValues.get("protocol"));
+		return (Protocol) Loader.newInstance(Protocol.class.getPackage().getName() + "." + IMPL_PACKAGE_PREFIX, configValues.get("protocol"));
 	}
 
 	public Integer getPort() {

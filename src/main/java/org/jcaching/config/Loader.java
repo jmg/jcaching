@@ -30,7 +30,7 @@ public class Loader {
 		return instance;
 	}
 	
-	public static Object getNewInstance(String packageName, String className) {
+	public static Object newInstance(String packageName, String className) {
 		
 		Class<?> klass = Loader.loadClass(packageName, className);
 		return newInstance(klass);
