@@ -13,9 +13,9 @@ import java.io.InputStreamReader;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+import org.jcaching.config.Config;
 import org.jcaching.protocol.Protocol;
 import org.jcaching.protocol.exception.InvalidActionException;
-import org.jcaching.settings.MemoryProcessSettings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,8 +26,8 @@ public class CacheClient {
 
     private static Logger logger = LoggerFactory.getLogger(CacheClient.class);
     
-    String host = "localhost";
-    Integer port = 22122;
+    String host = null;
+    Integer port = null;
     
     Socket client;
     
@@ -61,8 +61,18 @@ public class CacheClient {
      * @param port TODO
      */
     public void initialize() {
+    		
+    	Config config = Config.getInstance();
     	
-    	protocol = MemoryProcessSettings.getProtocol();
+    	protocol = config.getProtocol();
+    	
+    	if (port == null) {
+    		port = config.getPort();
+    	}
+    	
+    	if (host == null) {
+    		host = config.getHost();
+    	}
     }
     
     /**

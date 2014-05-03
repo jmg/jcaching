@@ -10,8 +10,8 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import org.jcaching.config.Config;
 import org.jcaching.protocol.Protocol;
-import org.jcaching.settings.MemoryProcessSettings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,7 +24,7 @@ public class CacheDeamon {
 
     private static CacheDeamon instance;    
 
-    private Integer port = 22122;
+    private Integer port = null;
     private ServerSocket server;       
 
     private boolean running = false;
@@ -55,7 +55,14 @@ public class CacheDeamon {
      * @param port TODO
      */
     private void initialize() {
-		protocol = MemoryProcessSettings.getProtocol();		
+    	
+    	Config config = Config.getInstance();
+    	
+		protocol = config.getProtocol();
+		
+		if (port == null) { 
+			port = config.getPort();
+		}
 	}
 
 	/**
