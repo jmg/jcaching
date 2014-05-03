@@ -18,7 +18,38 @@ TODO compilation steps
 How can I use it?
 -----------------
 
-TODO use examples
+Simple get from cache. If the value is not there just set it. The second time the value will be read from cache.
+
+```java
+package examples;
+
+import org.jcaching.cache.Cache;
+
+public class Simple {
+	
+	public static void main(String[] args) {
+		
+		System.out.println(getFromCache());
+	}
+	
+	public static String getFromCache() {
+		
+		String value = Cache.get("key-1");
+		if (value == null) {
+			/* The value assosiated with key-1 wasn't in cache. 
+			   Set the value within the key for the next time. */
+			value = "my value";
+			Cache.set("key-1", value);
+			System.out.println("Set " + value + " on cache!");
+		} else {
+			/* The value assosiated with key-1 was in cache. Bingo! */
+			System.out.println("Read " + value + " from cache!");
+		}
+		return value;
+	}
+}
+
+```
 
 Contributors
 ------------
@@ -26,3 +57,5 @@ Contributors
 * [Juan Manuel García](https://github.com/jmg)
 * [Mauro Szuchman](https://github.com/mszuchman)
 * [Ariel Gerardo Ríos](https://github.com/ariel17)
+
+
