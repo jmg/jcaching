@@ -4,18 +4,18 @@
  * TODO Description if available.
  */
 
-package org.jcaching.protocol.impl;
+package org.jcaching.backends.socketmemorybackend.protocol.impl;
 
 import java.util.Arrays;
 import java.util.List;
 
-import org.jcaching.protocol.Message;
-import org.jcaching.protocol.Protocol;
-import org.jcaching.protocol.action.Action;
-import org.jcaching.protocol.action.impl.Delete;
-import org.jcaching.protocol.action.impl.Get;
-import org.jcaching.protocol.action.impl.Set;
-import org.jcaching.protocol.exception.InvalidActionException;
+import org.jcaching.backends.socketmemorybackend.protocol.Message;
+import org.jcaching.backends.socketmemorybackend.protocol.Protocol;
+import org.jcaching.backends.socketmemorybackend.protocol.action.Action;
+import org.jcaching.backends.socketmemorybackend.protocol.action.impl.Delete;
+import org.jcaching.backends.socketmemorybackend.protocol.action.impl.Get;
+import org.jcaching.backends.socketmemorybackend.protocol.action.impl.Set;
+import org.jcaching.backends.socketmemorybackend.protocol.exception.InvalidActionException;
 
 /**
  * TODO
@@ -53,9 +53,10 @@ public class SimpleProtocol implements Protocol {
     
     /**
      * {@inheritDoc}
+     * @throws InvalidActionException 
      */
     @Override
-    public Message parseMessage(String message) {
+    public Message parseMessage(String message) throws InvalidActionException {
         
         String[] parts = message.split("\\s+");
         
@@ -104,9 +105,10 @@ public class SimpleProtocol implements Protocol {
 
     /**
      * {@inheritDoc}
+     * @throws InvalidActionException 
      */
     @Override
-    public Action getAction(String action) {
+    public Action getAction(String action) throws InvalidActionException {
         
         if (action.equals(getGetAction())) {
             return new Get();
@@ -116,7 +118,7 @@ public class SimpleProtocol implements Protocol {
             return new Delete();
         }
         
-        throw new RuntimeException("No valid action for this protocol");
+        throw new InvalidActionException();
     }
 
     /**

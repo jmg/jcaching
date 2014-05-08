@@ -6,44 +6,52 @@
 
 package org.jcaching.backends;
 
+import org.jcaching.config.Config;
+
+
 /**
  * TODO description
  */
 public interface CacheBackend {
+		
     /**
-     * Set a serialized object in cache using a key and returns true in case of
-     * success.
+     * Set a object in cache using a key.
      *
      * @param key TODO
      * @param serializedObj TODO
      * @return TODO
      */
-    boolean set(String key, String serializedObj);
+    void set(String key, Object value);
 
     /**
-     * Set a serialized object in cache using a key and returns true in case of
-     * success.
+     * Set a object in cache using a key.
      *
      * @param key TODO
      * @param serializedObj TODO
      * @param timeout TODO
      * @return TODO
      */
-    boolean set(String key, String serializedObj, int timeout);
+    void set(String key, Object value, int timeout);
     
     /**
-     * Returns the serialized object from cache.
+     * Returns the object from cache.
      *
      * @param key TODO
      * @return TODO
      */
-    String get(String key);
+    Object get(String key);
     
     /**
-     * Delete a serialized object from cache using a key.
+     * Delete a object from cache using a key.
      *
      * @param key TODO
      * @return TODO
      */
-    boolean delete(String key);
+    void delete(String key);
+    
+    /**
+     * @param config TODO
+     * @return TODO
+     */
+	void setConfig(Config config);
 }

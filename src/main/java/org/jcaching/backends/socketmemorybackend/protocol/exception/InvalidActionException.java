@@ -4,7 +4,8 @@
  * TODO Description if available.
  */
 
-package org.jcaching.protocol.exception;
+package org.jcaching.backends.socketmemorybackend.protocol.exception;
+
 
 /**
  * TODO

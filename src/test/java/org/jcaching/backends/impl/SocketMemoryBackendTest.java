@@ -8,18 +8,18 @@ package org.jcaching.backends.impl;
 
 import junit.framework.TestCase;
 
+import org.jcaching.backends.socketmemorybackend.server.CacheDeamon;
 import org.jcaching.cache.Cache;
-import org.jcaching.server.CacheDeamon;
 import org.junit.Test;
 
 /**
  * TODO description
  */
-public class MemoryProcessBackendTest extends TestCase {      
+public class SocketMemoryBackendTest extends TestCase {      
         
     public void setUp() {
          
-    	Cache.forceCacheBackend("MemoryProcessBackend");
+    	Cache.setConfigValue("backend", "SocketMemoryBackend");
     	
         CacheDeamon.serverForeverInAThread();
         
@@ -34,7 +34,7 @@ public class MemoryProcessBackendTest extends TestCase {
     @Test
     public void testCacheSet() {
         
-        assertEquals(true, Cache.set("key-1", "test"));
+        Cache.set("key-1", "test");
     }
     
     @Test
@@ -48,7 +48,7 @@ public class MemoryProcessBackendTest extends TestCase {
     public void testCacheDelete() {
         
     	Cache.set("key-1", "test");
-        assertEquals(true, Cache.delete("key-1"));
+        Cache.delete("key-1");
         assertEquals(null, Cache.get("key-1"));
     }
 }

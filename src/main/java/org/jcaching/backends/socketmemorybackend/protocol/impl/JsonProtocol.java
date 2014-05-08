@@ -4,11 +4,11 @@
  * TODO Description if available.
  */
 
-package org.jcaching.protocol.impl;
+package org.jcaching.backends.socketmemorybackend.protocol.impl;
 
-import org.jcaching.protocol.Message;
-import org.jcaching.protocol.Protocol;
-import org.jcaching.protocol.action.Action;
+import org.jcaching.backends.socketmemorybackend.protocol.Message;
+import org.jcaching.backends.socketmemorybackend.protocol.Protocol;
+import org.jcaching.backends.socketmemorybackend.protocol.action.Action;
 
 /**
  * TODO

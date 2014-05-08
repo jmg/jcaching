@@ -4,7 +4,7 @@
  * TODO Description if available.
  */
 
-package org.jcaching.server;
+package org.jcaching.backends.socketmemorybackend.server;
 
 import java.util.HashMap;
 

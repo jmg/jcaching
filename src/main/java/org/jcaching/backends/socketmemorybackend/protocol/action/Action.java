@@ -4,10 +4,10 @@
  * TODO Description if available.
  */
 
-package org.jcaching.protocol.action;
+package org.jcaching.backends.socketmemorybackend.protocol.action;
 
-import org.jcaching.protocol.Message;
-import org.jcaching.protocol.exception.InvalidActionException;
+import org.jcaching.backends.socketmemorybackend.protocol.Message;
+import org.jcaching.backends.socketmemorybackend.protocol.exception.InvalidActionException;
 
 
 /**

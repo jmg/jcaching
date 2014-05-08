@@ -4,7 +4,7 @@
  * TODO Description if available.
  */
 
-package org.jcaching.client;
+package org.jcaching.backends.socketmemorybackend.client;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -13,9 +13,9 @@ import java.io.InputStreamReader;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+import org.jcaching.backends.socketmemorybackend.protocol.exception.InvalidActionException;
+import org.jcaching.backends.socketmemorybackend.protocol.Protocol;
 import org.jcaching.config.Config;
-import org.jcaching.protocol.Protocol;
-import org.jcaching.protocol.exception.InvalidActionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,25 +34,16 @@ public class CacheClient {
     DataOutputStream os;
     BufferedReader is;
     Protocol protocol;
+    Config config;
     
     /**
      * {@inheritDoc}
      * @see Object#CacheClient()
      */
-    public CacheClient() {
+    public CacheClient(Config config) {
     	
+    	this.config = config;
     	initialize();
-    }
-    
-    /**
-     * Constructor.
-     *
-     * @param port TODO
-     */
-    public CacheClient(int port) {
-        
-        this.port = port;
-        initialize();
     }
     
     /**
@@ -61,18 +52,10 @@ public class CacheClient {
      * @param port TODO
      */
     public void initialize() {
-    		
-    	Config config = Config.getInstance();
     	
-    	protocol = config.getProtocol();
-    	
-    	if (port == null) {
-    		port = config.getPort();
-    	}
-    	
-    	if (host == null) {
-    		host = config.getHost();
-    	}
+    	protocol = config.getProtocol();    	    	
+    	port = config.getPort();    	
+    	host = config.getHost();    	
     }
     
     /**
@@ -193,5 +176,10 @@ public class CacheClient {
                 
         os = new DataOutputStream(client.getOutputStream());
         is = new BufferedReader(new InputStreamReader(client.getInputStream()));
-    }   
+    }
+
+	public void setConfig(Config config) {
+		
+		this.config = config;
+	}   
 }

@@ -34,7 +34,7 @@ public class Simple {
 	
 	public static String getFromCache() {
 		
-		String value = (String) Cache.get("key-1");
+		String value = Cache.get("key-1");
 		if (value == null) {
 			/* The value assosiated with key-1 wasn't in cache. 
 			   Set the value within the key for the next time. */

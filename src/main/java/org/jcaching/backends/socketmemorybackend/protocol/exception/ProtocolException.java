@@ -4,7 +4,7 @@
  * TODO
  */
 
-package org.jcaching.protocol.exception;
+package org.jcaching.backends.socketmemorybackend.protocol.exception;
 
 import org.jcaching.exception.JCachingException;
 

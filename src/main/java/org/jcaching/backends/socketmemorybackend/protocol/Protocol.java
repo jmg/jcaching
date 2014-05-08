@@ -4,10 +4,10 @@
  * TODO Description if available.
  */
 
-package org.jcaching.protocol;
+package org.jcaching.backends.socketmemorybackend.protocol;
 
-import org.jcaching.protocol.action.Action;
-import org.jcaching.protocol.exception.InvalidActionException;
+import org.jcaching.backends.socketmemorybackend.protocol.action.Action;
+import org.jcaching.backends.socketmemorybackend.protocol.exception.InvalidActionException;
 
 /**
  * TODO description
@@ -47,8 +47,9 @@ public interface Protocol {
      *
      * @param message TODO
      * @return TODO
+     * @throws InvalidActionException 
      */
-    Message parseMessage(String message);    
+    Message parseMessage(String message) throws InvalidActionException;    
     
     /**
      * TODO
@@ -76,6 +77,7 @@ public interface Protocol {
      *
      * @param action TODO
      * @return TODO
+     * @throws InvalidActionException 
      */
-    Action getAction(String action);    
+    Action getAction(String action) throws InvalidActionException;    
 }

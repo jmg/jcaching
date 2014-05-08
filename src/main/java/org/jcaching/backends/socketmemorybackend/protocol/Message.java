@@ -4,10 +4,10 @@
  * TODO Description if available.
  */
 
-package org.jcaching.protocol;
+package org.jcaching.backends.socketmemorybackend.protocol;
 
-import org.jcaching.protocol.action.Action;
-import org.jcaching.protocol.exception.InvalidActionException;
+import org.jcaching.backends.socketmemorybackend.protocol.action.Action;
+import org.jcaching.backends.socketmemorybackend.protocol.exception.InvalidActionException;
 
 /**
  * TODO
@@ -24,8 +24,9 @@ public class Message {
      * @param action TODO
      * @param key TODO
      * @param value TODO
+     * @throws InvalidActionException 
      */
-    public Message(String action, String key, String value, Protocol protocol) {
+    public Message(String action, String key, String value, Protocol protocol) throws InvalidActionException {
         super();
                 
         this.key = key;
@@ -84,8 +85,9 @@ public class Message {
      * @param action TODO
      * @param protocol 
      * @return TODO
+     * @throws InvalidActionException 
      */
-    public Action setAction(String action, Protocol protocol) {
+    public Action setAction(String action, Protocol protocol) throws InvalidActionException {
         
         return protocol.getAction(action);
     }

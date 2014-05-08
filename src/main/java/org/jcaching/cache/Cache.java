@@ -1,7 +1,6 @@
 package org.jcaching.cache;
 
 import org.jcaching.backends.CacheBackend;
-import org.jcaching.backends.impl.MemoryProcessBackend;
 import org.jcaching.config.Config;
 
 /*
@@ -14,28 +13,28 @@ public class Cache {
 		return Config.getInstance().getBackend();
 	}
 		
-	public static String get(String key) {
+	public static Object get(String key) {
 		
 		return getBackend().get(key);
 	}
 	
-	public static boolean set(String key, String value) {
+	public static void set(String key, String value) {
 		
-		return getBackend().set(key, value);
+		getBackend().set(key, value);
 	}
 	
-	public static boolean set(String key, String value, int timeout) {
+	public static void set(String key, String value, int timeout) {
 		
-		return getBackend().set(key, value, timeout);
+		getBackend().set(key, value, timeout);
 	}
 
-	public static boolean delete(String key) {
+	public static void delete(String key) {
 		
-		return getBackend().delete(key);
+		getBackend().delete(key);
 	}
 
-	public static void forceCacheBackend(String backend) { 
+	public static void setConfigValue(String key, String value) { 
 		
-		Config.getInstance().setConfigValue("backend", backend);
+		Config.getInstance().setConfigValue(key, value);
 	}
 }

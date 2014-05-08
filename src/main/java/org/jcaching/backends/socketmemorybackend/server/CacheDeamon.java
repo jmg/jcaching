@@ -4,14 +4,14 @@
  * TODO Description if available.
  */
 
-package org.jcaching.server;
+package org.jcaching.backends.socketmemorybackend.server;
 
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import org.jcaching.backends.socketmemorybackend.protocol.Protocol;
 import org.jcaching.config.Config;
-import org.jcaching.protocol.Protocol;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,18 +36,7 @@ public class CacheDeamon {
     private CacheDeamon() {
     	    	
     	initialize();
-    }
-    
-    /**
-     * Private constructor.
-     *
-     * @param port TODO
-     */
-    public CacheDeamon(Integer port) {
-        
-        this.port = port;
-        initialize();
-    }
+    }   
     
     /**
      * Private constructor.
@@ -56,13 +45,10 @@ public class CacheDeamon {
      */
     private void initialize() {
     	
-    	Config config = Config.getInstance();
+    	Config config = ServerConfig.getInstance();
     	
 		protocol = config.getProtocol();
-		
-		if (port == null) { 
-			port = config.getPort();
-		}
+		port = config.getPort();
 	}
 
 	/**

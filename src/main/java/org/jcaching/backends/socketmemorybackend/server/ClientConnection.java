@@ -4,7 +4,7 @@
  * TODO Description if available.
  */
 
-package org.jcaching.server;
+package org.jcaching.backends.socketmemorybackend.server;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -12,9 +12,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
 
-import org.jcaching.protocol.Message;
-import org.jcaching.protocol.Protocol;
-import org.jcaching.protocol.exception.InvalidActionException;
+import org.jcaching.backends.socketmemorybackend.protocol.Message;
+import org.jcaching.backends.socketmemorybackend.protocol.Protocol;
+import org.jcaching.backends.socketmemorybackend.protocol.exception.InvalidActionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
