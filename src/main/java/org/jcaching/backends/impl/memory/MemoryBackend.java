@@ -25,10 +25,12 @@ public class MemoryBackend implements CacheBackend {
 	@Override
 	public Object get(String key) {
 		ValueWrapper<Object> v = map.get(key);
-		if (v.isValid()) {
-			return v.getValue();
-		}
-		return null;
+		if(v == null)
+			return null;
+		if(!v.isValid())
+			return null;
+		
+		return v.getValue();
 	}
 
 	@Override
