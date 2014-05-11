@@ -1,7 +1,7 @@
 package org.jcaching.backends.impl.memory;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.jcaching.backends.CacheBackend;
 import org.jcaching.backends.impl.memory.valuewrapper.DummyValueWrapper;
@@ -10,7 +10,7 @@ import org.jcaching.backends.impl.memory.valuewrapper.ValueWrapper;
 import org.jcaching.config.Config;
 
 public class MemoryBackend implements CacheBackend {
-	private static final Map<String, ValueWrapper<Object>>	map	= new HashMap<String, ValueWrapper<Object>>();
+	private static final Map<String, ValueWrapper<Object>>	map	= new ConcurrentHashMap<String, ValueWrapper<Object>>();
 
 	@Override
 	public void set(String key, Object value) {
