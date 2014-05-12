@@ -6,14 +6,15 @@
 
 package org.jcaching.backends;
 
-import org.jcaching.config.Config;
+import org.apache.commons.configuration.Configuration;
 
 
 /**
  * TODO description
+ * @version
  */
 public interface CacheBackend {
-		
+        
     /**
      * Set a object in cache using a key.
      *
@@ -48,10 +49,15 @@ public interface CacheBackend {
      * @return TODO
      */
     void delete(String key);
-    
+
     /**
-     * @param config TODO
-     * @return TODO
+     * @return Returns the configuration instance used to paremetrize the
+     * framework/backend.
      */
-	void setConfig(Config config);
+    Configuration getConfiguration();
+
+    /**
+     * Sets all backend components to its initial values.
+     */
+    void initialize();
 }
