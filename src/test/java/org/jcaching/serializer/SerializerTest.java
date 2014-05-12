@@ -1,10 +1,13 @@
+/**
+ * SerializerTest
+ *
+ * Test units for Serializer class behaviour.
+ */
+
 package org.jcaching.serializer;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.lang.reflect.Field;
 
 public class SerializerTest {
 	
@@ -18,8 +21,6 @@ public class SerializerTest {
 		serializer = new Serializer();
 		//objetoConListaDeString = new ;
 	}
-	
-
 	
 	@Test
 	public void serializarDeserializarString()

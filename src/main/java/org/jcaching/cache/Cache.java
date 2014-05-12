@@ -1,40 +1,84 @@
+/**
+ * Cache
+ *
+ * TODO Description if available.
+ */
+
 package org.jcaching.cache;
 
+import org.apache.commons.configuration.Configuration;
 import org.jcaching.backends.CacheBackend;
-import org.jcaching.config.Config;
+import org.jcaching.backends.factory.CacheBackendFactory;
+import org.jcaching.exception.ImplementationClassLoadException;
 
-/*
+/**
  * Facade to interact with the cache user
- * */
-public class Cache {		
-	
-	private static CacheBackend getBackend() {
-		
-		return Config.getInstance().getBackend();
-	}
-		
-	public static Object get(String key) {
-		
-		return getBackend().get(key);
-	}
-	
-	public static void set(String key, String value) {
-		
-		getBackend().set(key, value);
-	}
-	
-	public static void set(String key, String value, int timeout) {
-		
-		getBackend().set(key, value, timeout);
-	}
+ */
+public class Cache {
 
-	public static void delete(String key) {
-		
-		getBackend().delete(key);
-	}
+    private CacheBackend backend;
 
-	public static void setConfigValue(String key, String value) { 
-		
-		Config.getInstance().setConfigValue(key, value);
-	}
+    /**
+     * TODO
+     *
+     * @param configuration TODO
+     * @throws ImplementationClassLoadException The indicated backend
+     * implementation class cannot be loaded or instantiated.
+     */
+    public Cache(Configuration configuration)
+            throws ImplementationClassLoadException {
+        CacheBackendFactory backendFactory =
+            new CacheBackendFactory(configuration);
+
+        backend = backendFactory.getCacheBackendInstance();
+    }
+
+    /**
+     * TODO
+     *
+     * @param backend TODO
+     */
+    public Cache(CacheBackend backend) {
+        this.backend = backend;
+    }
+
+    /**
+     * TODO
+     *
+     * @param key TODO
+     * @return TODO
+     */
+    public Object get(String key) {
+        return backend.get(key);
+    }
+    
+    /**
+     * TODO
+     *
+     * @param key TODO
+     * @param value TODO
+     */
+    public void set(String key, String value) {
+        backend.set(key, value);
+    }
+    
+    /**
+     * TODO
+     *
+     * @param key TODO
+     * @param value TODO
+     * @param timeout TODO
+     */
+    public void set(String key, String value, int timeout) {
+        backend.set(key, value, timeout);
+    }
+
+    /**
+     * TODO
+     *
+     * @param key TODO
+     */
+    public void delete(String key) {
+        backend.delete(key);
+    }
 }
