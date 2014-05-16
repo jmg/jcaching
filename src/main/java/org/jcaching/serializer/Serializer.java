@@ -27,6 +27,29 @@ public class Serializer {
 		return finalString;
 	}
 	
+	public Object deserialize(String serializedObject){
+		
+		Object finalObject = null;
+		
+		
+		
+		
+		return finalObject;
+	}
 	
+	public Object instanciarObjeto(String serializedObject){
+		int beginIndex;
+		int endIndex;
+		Class<?> clazz = null;
+		
+		
+		beginIndex = serializedObject.indexOf("Class:");
+		endIndex = serializedObject.substring(beginIndex).indexOf("\n");
+		String auxClass = serializedObject.substring(beginIndex).substring(6, endIndex);
+		try {
+			clazz= Class.forName(auxClass);
+			return clazz.newInstance();
+		} catch (Exception e){return null;}
+	}
 
 }
