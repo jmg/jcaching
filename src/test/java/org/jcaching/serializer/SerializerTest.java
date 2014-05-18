@@ -6,14 +6,14 @@
 
 package org.jcaching.serializer;
 
-import org.jcaching.serializer.impl.serializer.Serializer;
+import org.jcaching.serializer.impl.serializer.SerializerImpl;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 public class SerializerTest {
 	
-	Serializer aSerializer = new Serializer();
+	SerializerImpl aSerializer = new SerializerImpl();
 	String aString = "There are no facts, only interpretations";
 	int aInt = 4;
 	

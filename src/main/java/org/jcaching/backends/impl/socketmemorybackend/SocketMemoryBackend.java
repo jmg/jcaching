@@ -11,7 +11,7 @@ import org.jcaching.backends.CacheBackend;
 import org.jcaching.backends.impl.BaseCacheBackend;
 import org.jcaching.backends.impl.socketmemorybackend.client.CacheClient;
 import org.jcaching.exception.ImplementationClassLoadException;
-import org.jcaching.serializer.ISerializer;
+import org.jcaching.serializer.Serializer;
 import org.jcaching.serializer.factory.SerializerFactory;
 
 /**
@@ -21,7 +21,7 @@ public class SocketMemoryBackend extends BaseCacheBackend implements
         CacheBackend {
 
     private CacheClient client;
-	private ISerializer serializer;
+	private Serializer serializer;
 
     /**
      * Default constructor.

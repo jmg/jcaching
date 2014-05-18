@@ -2,9 +2,10 @@ package org.jcaching.serializer.impl.serializer;
 
 import java.lang.reflect.Field;
 
-import org.jcaching.serializer.ISerializer;
+import org.jcaching.serializer.Serializer;
 
-public class Serializer implements ISerializer {
+// Cambiar el nombre de esta clase a gusto. Pero que no se llame como la interfaz Serializer.
+public class SerializerImpl implements Serializer {
 	
 	@Override
 	public String serialize(Object serializableObject){

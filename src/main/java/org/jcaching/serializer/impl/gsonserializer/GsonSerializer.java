@@ -1,10 +1,10 @@
 package org.jcaching.serializer.impl.gsonserializer;
 
-import org.jcaching.serializer.ISerializer;
+import org.jcaching.serializer.Serializer;
 
 import com.google.gson.Gson;
 
-public class GsonSerializer implements ISerializer {
+public class GsonSerializer implements Serializer {
 	
 	@Override
 	public String serialize(Object object) {

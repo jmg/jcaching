@@ -1,7 +1,7 @@
 package org.jcaching.serializer.factory;
 
 import org.apache.commons.configuration.Configuration;
-import org.jcaching.serializer.ISerializer;
+import org.jcaching.serializer.Serializer;
 import org.jcaching.serializer.impl.gsonserializer.GsonSerializer;
 
 public class SerializerFactory {
@@ -17,7 +17,7 @@ public class SerializerFactory {
 		this.configuration = configuration;
 	}
 
-	public ISerializer getSerializerInstance() {
+	public Serializer getSerializerInstance() {
 		
 		// FIXME Hardcoded serializer
 		return new GsonSerializer();
