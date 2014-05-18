@@ -4,19 +4,52 @@ import java.lang.reflect.Field;
 
 public class Serializer {
 
-	public String serialize(Object serializableObject) throws ClassNotFoundException {
+	public String serialize(Object serializableObject){
 		String finalString ="{ ";
+		Class<?> clazz = serializableObject.getClass();
 		
 		//Save the name of the class
-		String objectClass = serializableObject.getClass().toString();
-		finalString+="Class:"+objectClass+"";
+		String objectClass = clazz.getName();
+		finalString+="Class:"+objectClass+"\n";
 		
 		//Sabe the attr
-		Class<?> clazz = Class.forName(objectClass);
-		Field attrs[] = clazz.getDeclaredFields(); //Que onda?
+		Field attrs[] = clazz.getDeclaredFields(); //Que onda? http://docs.oracle.com/javase/tutorial/reflect/class/classMembers.html
 		
-		finalString +="\n}";
+		
+		for( Field attr : attrs){
+			boolean accessible = attr.isAccessible();
+			attr.setAccessible(true);
+			try {finalString += attr.getType()+" "+attr.getName() +":"+attr.get(serializableObject)+"\n" ;} catch(IllegalAccessException e){}
+			attr.setAccessible(accessible);
+		}
+		
+		finalString +="}";
 		return finalString;
+	}
+	
+	public Object deserialize(String serializedObject){
+		
+		Object finalObject = null;
+		
+		
+		
+		
+		return finalObject;
+	}
+	
+	public Object instanciarObjeto(String serializedObject){
+		int beginIndex;
+		int endIndex;
+		Class<?> clazz = null;
+		
+		
+		beginIndex = serializedObject.indexOf("Class:");
+		endIndex = serializedObject.substring(beginIndex).indexOf("\n");
+		String auxClass = serializedObject.substring(beginIndex).substring(6, endIndex);
+		try {
+			clazz= Class.forName(auxClass);
+			return clazz.newInstance();
+		} catch (Exception e){return null;}
 	}
 
 }
