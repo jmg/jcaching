@@ -40,7 +40,7 @@ public interface CacheBackend {
      * @param key TODO
      * @return TODO
      */
-    Object get(String key);
+    Object get(String key, Class<?> klass);
     
     /**
      * Delete a object from cache using a key.

@@ -48,8 +48,8 @@ public class Cache {
      * @param key TODO
      * @return TODO
      */
-    public Object get(String key) {
-        return backend.get(key);
+    public Object get(String key, Class<?> klass) {
+        return backend.get(key, klass);
     }
     
     /**
@@ -58,7 +58,7 @@ public class Cache {
      * @param key TODO
      * @param value TODO
      */
-    public void set(String key, String value) {
+    public void set(String key, Object value) {
         backend.set(key, value);
     }
     
@@ -69,7 +69,7 @@ public class Cache {
      * @param value TODO
      * @param timeout TODO
      */
-    public void set(String key, String value, int timeout) {
+    public void set(String key, Object value, int timeout) {
         backend.set(key, value, timeout);
     }
 

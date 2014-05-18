@@ -75,20 +75,13 @@ public class SocketMemoryBackendTest {
         if (deamon != null) {
             deamon.stopServer();
         }
-    }
-    
-    @Test
-    public void testCacheSet() {
-        
-        cache.set("key-1", "test");
-        // TODO assert side effect?
-    }
+    }    
     
     @Test
     public void testCacheGet() {
         
         cache.set("key-1", "test value");
-        TestCase.assertEquals("test value", cache.get("key-1")
+        TestCase.assertEquals("test value", cache.get("key-1", String.class)
         );
     }
     
@@ -98,6 +91,17 @@ public class SocketMemoryBackendTest {
         cache.set("key-1", "test");
         cache.delete("key-1");
 
-        TestCase.assertEquals(null, cache.get("key-1"));
+        TestCase.assertEquals(null, cache.get("key-1", String.class));
+    }
+    
+    @Test
+    public void testCacheGetObject() {
+    	
+    	Person person = new Person("juan", 25);
+    	cache.set("person-1", person);
+    	
+    	Person cachedPerson = (Person) cache.get("person-1", Person.class);
+        TestCase.assertEquals(person.getName(), cachedPerson.getName());
+        TestCase.assertEquals(person.getAge(), cachedPerson.getAge());
     }
 }

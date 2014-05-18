@@ -89,6 +89,7 @@ public class CacheClient {
      * TODO
      *
      * @param key TODO
+     * @param klass 
      * @return TODO
      */
     public String get(String key) {
@@ -103,9 +104,9 @@ public class CacheClient {
      * @param data TODO
      * @return TODO
      */
-    public boolean set(String key, String data) {
+    public void set(String key, String data) {
         
-        return sendMessage(protocol.getSetAction(), key, data).equals("ok");
+        sendMessage(protocol.getSetAction(), key, data).equals("ok");
     }
 
     /**
@@ -114,9 +115,9 @@ public class CacheClient {
      * @param key TODO
      * @return TODO
      */
-    public boolean delete(String key) { 
+    public void delete(String key) { 
         
-        return sendMessage(protocol.getDeleteAction(), key, null).equals("ok");       
+        sendMessage(protocol.getDeleteAction(), key, null).equals("ok");       
     }
 
     /**
