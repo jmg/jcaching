@@ -1,9 +1,12 @@
-package org.jcaching.serializer;
+package org.jcaching.serializer.impl.serializer;
 
 import java.lang.reflect.Field;
 
-public class Serializer {
+import org.jcaching.serializer.ISerializer;
 
+public class Serializer implements ISerializer {
+	
+	@Override
 	public String serialize(Object serializableObject){
 		String finalString ="{ ";
 		Class<?> clazz = serializableObject.getClass();
@@ -27,6 +30,7 @@ public class Serializer {
 		return finalString;
 	}
 	
+	@Override
 	public Object deserialize(String serializedObject){
 		
 		Object finalObject = null;

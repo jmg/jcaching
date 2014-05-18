@@ -11,8 +11,8 @@ import org.jcaching.backends.CacheBackend;
 import org.jcaching.backends.impl.BaseCacheBackend;
 import org.jcaching.backends.impl.socketmemorybackend.client.CacheClient;
 import org.jcaching.exception.ImplementationClassLoadException;
-
-import com.google.gson.Gson;
+import org.jcaching.serializer.ISerializer;
+import org.jcaching.serializer.factory.SerializerFactory;
 
 /**
  * TODO description
@@ -21,6 +21,7 @@ public class SocketMemoryBackend extends BaseCacheBackend implements
         CacheBackend {
 
     private CacheClient client;
+	private ISerializer serializer;
 
     /**
      * Default constructor.
@@ -30,17 +31,10 @@ public class SocketMemoryBackend extends BaseCacheBackend implements
             throws ImplementationClassLoadException {
         super(configuration);
         client = new CacheClient(configuration);
-    }
-    
-    private String serialize(Object object) {
-    	    	
-    	return new Gson().toJson(object);
-    }
-    
-    private Object deserialize(String string, Class<?> klass) {
-    	
-    	return new Gson().fromJson(string, klass);    	
-    }
+        
+        SerializerFactory factory = new SerializerFactory(configuration);
+        serializer = factory.getSerializerInstance();
+    }        
 
     /**
      * {@inheritDoc}
@@ -48,7 +42,7 @@ public class SocketMemoryBackend extends BaseCacheBackend implements
     @Override
     public void set(String key, Object object) {
     	
-        client.set(key, serialize(object));
+        client.set(key, serializer.serialize(object));
     }
 
     /**
@@ -57,16 +51,16 @@ public class SocketMemoryBackend extends BaseCacheBackend implements
     @Override
     public void set(String key, Object object, int timeout) {
 
-        client.set(key, serialize(object));
+        client.set(key, serializer.serialize(object));
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Object get(String key, Class<?> klass) {
+    public Object get(String key) {
         
-        return deserialize(client.get(key), klass);
+        return serializer.deserialize(client.get(key));
     }
 
     /**

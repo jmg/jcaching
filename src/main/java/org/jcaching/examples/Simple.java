@@ -28,7 +28,7 @@ public class Simple {
         System.out.print("Checking key is empty... ");
         
         String key = "key-1";
-        assert cache.get(key, String.class) == null;
+        assert cache.get(key) == null;
 
         System.out.println("Done :)");
 
@@ -41,7 +41,7 @@ public class Simple {
 
         System.out.print("Checking key value in cache... ");
 
-        String cacheValue = (String) cache.get(key, String.class);
+        String cacheValue = (String) cache.get(key);
         assert cacheValue != null;
         assert cacheValue.equals(value);
 

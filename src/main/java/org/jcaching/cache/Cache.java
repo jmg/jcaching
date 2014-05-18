@@ -48,8 +48,8 @@ public class Cache {
      * @param key TODO
      * @return TODO
      */
-    public Object get(String key, Class<?> klass) {
-        return backend.get(key, klass);
+    public Object get(String key) {
+        return backend.get(key);
     }
     
     /**

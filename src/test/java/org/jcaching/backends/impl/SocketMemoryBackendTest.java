@@ -81,7 +81,7 @@ public class SocketMemoryBackendTest {
     public void testCacheGet() {
         
         cache.set("key-1", "test value");
-        TestCase.assertEquals("test value", cache.get("key-1", String.class)
+        TestCase.assertEquals("test value", cache.get("key-1")
         );
     }
     
@@ -91,7 +91,7 @@ public class SocketMemoryBackendTest {
         cache.set("key-1", "test");
         cache.delete("key-1");
 
-        TestCase.assertEquals(null, cache.get("key-1", String.class));
+        TestCase.assertEquals(null, cache.get("key-1"));
     }
     
     @Test
@@ -100,7 +100,7 @@ public class SocketMemoryBackendTest {
     	Person person = new Person("juan", 25);
     	cache.set("person-1", person);
     	
-    	Person cachedPerson = (Person) cache.get("person-1", Person.class);
+    	Person cachedPerson = (Person) cache.get("person-1");
         TestCase.assertEquals(person.getName(), cachedPerson.getName());
         TestCase.assertEquals(person.getAge(), cachedPerson.getAge());
     }

@@ -40,7 +40,7 @@ public interface CacheBackend {
      * @param key TODO
      * @return TODO
      */
-    Object get(String key, Class<?> klass);
+    Object get(String key);
     
     /**
      * Delete a object from cache using a key.
@@ -59,5 +59,5 @@ public interface CacheBackend {
     /**
      * Sets all backend components to its initial values.
      */
-    void initialize();
+    void initialize();	
 }
