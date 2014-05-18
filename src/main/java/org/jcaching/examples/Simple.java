@@ -23,7 +23,7 @@ public class Simple {
 
         System.out.println(">> Simple example for JCaching use:");
         
-        Cache cache = JCaching.getInstance();
+        Cache cache = JCaching.getCache();
         
         System.out.print("Checking key is empty... ");
         

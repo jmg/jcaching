@@ -63,7 +63,7 @@ public class SocketMemoryBackendTest {
             ImplementationClassLoadException {
 
         JCaching.setConfiguration(configuration);
-        cache = JCaching.getInstance();
+        cache = JCaching.getCache();
     }
 
     @After

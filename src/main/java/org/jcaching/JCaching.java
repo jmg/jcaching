@@ -43,9 +43,9 @@ public class JCaching {
      * @throws ImplementationClassLoadException TODO
      * @throws ConfigurationException TODO
      */
-    public static Cache getInstance() throws ConfigurationException,
+    public static Cache getCache() throws ConfigurationException,
             ImplementationClassLoadException {
-        return getInstance(false);
+        return getCache(false);
     }
 
     /**
@@ -53,7 +53,7 @@ public class JCaching {
      * @throws ImplementationClassLoadException TODO
      * @throws ConfigurationException TODO
      */
-    public static Cache getInstance(boolean forceReload)
+    public static Cache getCache(boolean forceReload)
             throws ConfigurationException, ImplementationClassLoadException {
         if (instance == null || forceReload) {
             logger.debug("Forcibly creating a new cache instance... ");
