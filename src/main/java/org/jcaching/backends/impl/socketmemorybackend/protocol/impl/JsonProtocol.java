@@ -8,12 +8,14 @@ package org.jcaching.backends.impl.socketmemorybackend.protocol.impl;
 
 import org.jcaching.backends.impl.socketmemorybackend.protocol.Message;
 import org.jcaching.backends.impl.socketmemorybackend.protocol.Protocol;
-import org.jcaching.backends.impl.socketmemorybackend.protocol.action.Action;
+import org.jcaching.backends.impl.socketmemorybackend.protocol.exception.InvalidActionException;
+
+import com.google.gson.Gson;
 
 /**
  * TODO
  */
-public class JsonProtocol implements Protocol {
+public class JsonProtocol extends BaseProtocol implements Protocol {
     
     /**
      * Default constructor.
@@ -26,70 +28,19 @@ public class JsonProtocol implements Protocol {
      */
     @Override
     public String buildMessage(String action, String key, String data) {
-        // TODO Auto-generated method stub
-        return null;
+    	
+    	GsonMessage gsonMessage = new GsonMessage(action, key, data);
+    	return new Gson().toJson(gsonMessage) + "\n";
     }
 
     /**
      * {@inheritDoc}
+     * @throws InvalidActionException 
      */
     @Override
-    public String buildResponse(Message message) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Message parseMessage(String message) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String parseResponse(String message) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String getSetAction() {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String getGetAction() {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String getDeleteAction() {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Action getAction(String action) {
-        // TODO Auto-generated method stub
-        return null;
+    public Message parseMessage(String message) throws InvalidActionException {
+        
+    	GsonMessage gsonMessage = new Gson().fromJson(message, GsonMessage.class);
+    	return new Message(gsonMessage.getAction(), gsonMessage.getKey(), gsonMessage.getData(), this);
     }
 }

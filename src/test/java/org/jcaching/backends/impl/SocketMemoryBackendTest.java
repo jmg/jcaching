@@ -51,7 +51,7 @@ public class SocketMemoryBackendTest {
         configuration.setProperty(
                 "jcaching.backends.socketmemorybackend.protocol",
                 "org.jcaching.backends.impl.socketmemorybackend.protocol." +
-                    "impl.SimpleProtocol");
+                    "impl.JsonProtocol");
 
         deamon = new CacheDeamon(configuration);
 
