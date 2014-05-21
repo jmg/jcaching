@@ -27,7 +27,7 @@ public class Cache {
      */
     public Cache(Configuration configuration)
             throws ImplementationClassLoadException {
-        CacheBackendFactory backendFactory =
+    	CacheBackendFactory backendFactory =
             new CacheBackendFactory(configuration);
 
         backend = backendFactory.getCacheBackendInstance();

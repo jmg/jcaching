@@ -52,6 +52,11 @@ public class SocketMemoryBackendTest {
                 "jcaching.backends.socketmemorybackend.protocol",
                 "org.jcaching.backends.impl.socketmemorybackend.protocol." +
                     "impl.JsonProtocol");
+        
+        configuration.setProperty(
+                "jcaching.serializer",
+                "org.jcaching.serializer.impl.gsonserializer.GsonSerializer");
+        
 
         deamon = new CacheDeamon(configuration);
 
