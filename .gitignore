@@ -1,6 +1,7 @@
 # Compiled artifacts
 *.class
 target
+.classpath
 
 # Log files
 *.log
