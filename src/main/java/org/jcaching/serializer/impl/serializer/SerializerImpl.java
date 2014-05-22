@@ -1,12 +1,10 @@
 package org.jcaching.serializer.impl.serializer;
 
-import java.lang.reflect.Field;
-
 import org.jcaching.serializer.Serializer;
 
 // Cambiar el nombre de esta clase a gusto. Pero que no se llame como la interfaz Serializer.
 public class SerializerImpl implements Serializer {
-	
+
 	@Override
 	public String serialize(Object serializableObject){
 		String finalString ="{ ";
@@ -30,31 +28,32 @@ public class SerializerImpl implements Serializer {
 		finalString +="}";
 		return finalString;
 	}
-	
+
 	@Override
-	public Object deserialize(String serializedObject){
-		
-		Object finalObject = null;
-		
-		
-		
-		
-		return finalObject;
-	}
-	
-	public Object instanciarObjeto(String serializedObject){
+	public Object deserialize(String serializedObject) throws InstantiationException, IllegalAccessException, ClassNotFoundException{
 		int beginIndex;
 		int endIndex;
-		Class<?> clazz = null;
-		
+		Object finalObject = null;
 		
 		beginIndex = serializedObject.indexOf("Class:");
 		endIndex = serializedObject.substring(beginIndex).indexOf("\n");
 		String auxClass = serializedObject.substring(beginIndex).substring(6, endIndex);
-		try {
-			clazz= Class.forName(auxClass);
+		
+		finalObject = instanciarObjeto(auxClass);
+				
+		
+		return finalObject;
+	}
+	
+	public Object instanciarObjeto(String nombreClase) throws InstantiationException, IllegalAccessException, ClassNotFoundException{
+		
+		Class<?> clazz = null;
+		
+			clazz= Class.forName(nombreClase);
+			
+			//obtenerInstancia();
+					
 			return clazz.newInstance();
-		} catch (Exception e){return null;}
 	}
 
 }
