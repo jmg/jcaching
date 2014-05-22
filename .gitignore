@@ -2,6 +2,7 @@
 *.class
 target
 .classpath
+bin/
 
 # Log files
 *.log
