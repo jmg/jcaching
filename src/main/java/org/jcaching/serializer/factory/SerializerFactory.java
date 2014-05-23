@@ -1,25 +1,19 @@
 package org.jcaching.serializer.factory;
 
 import org.apache.commons.configuration.Configuration;
+import org.jcaching.exception.ImplementationClassLoadException;
+import org.jcaching.factory.BaseFactory;
 import org.jcaching.serializer.Serializer;
-import org.jcaching.serializer.impl.gsonserializer.GsonSerializer;
 
-public class SerializerFactory {
-	
-	/* TODO implement a factory to instantiate 
-	   serializer objects from the configuration file.
-	*/
-	
-	private Configuration configuration;	
-	
+public class SerializerFactory extends BaseFactory {
+		
 	public SerializerFactory(Configuration configuration) {
 		
-		this.configuration = configuration;
+		super(configuration);
 	}
 
-	public Serializer getSerializerInstance() {
+	public Serializer getSerializerInstance() throws ImplementationClassLoadException {
 		
-		// FIXME Hardcoded serializer
-		return new GsonSerializer();
+		return (Serializer) this.getObjectInstance("jcaching.serializer");
 	}
 }
