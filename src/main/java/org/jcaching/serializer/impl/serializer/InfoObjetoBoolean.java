@@ -1,4 +1,4 @@
-package org.jcaching.serializer;
+package org.jcaching.serializer.impl.serializer;
 
 public class InfoObjetoBoolean implements InfoObjeto {
 	

@@ -1,4 +1,4 @@
-package org.jcaching.serializer;
+package org.jcaching.serializer.impl.serializer;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 
