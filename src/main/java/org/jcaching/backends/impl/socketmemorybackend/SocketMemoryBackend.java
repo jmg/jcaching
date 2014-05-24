@@ -50,8 +50,8 @@ public class SocketMemoryBackend extends BaseCacheBackend implements
      */
     @Override
     public void set(String key, Object object, int timeout) {
-
-        client.set(key, serializer.serialize(object));
+    	       	
+        client.set(key, serializer.serialize(object), timeout);
     }
 
     /**

@@ -94,7 +94,7 @@ public class CacheClient {
      */
     public String get(String key) {
                         
-        return sendMessage(protocol.getGetAction(), key, null);               
+        return sendMessage(protocol.getGetAction(), key, null, null);               
     }
     
     /**
@@ -106,7 +106,19 @@ public class CacheClient {
      */
     public void set(String key, String data) {
         
-        sendMessage(protocol.getSetAction(), key, data).equals("ok");
+        sendMessage(protocol.getSetAction(), key, data, null);
+    }
+    
+    /**
+     * TODO
+     *
+     * @param key TODO
+     * @param data TODO
+     * @return TODO
+     */
+    public void set(String key, String data, int timeout) {
+        
+        sendMessage(protocol.getSetAction(), key, data, timeout);
     }
 
     /**
@@ -117,7 +129,7 @@ public class CacheClient {
      */
     public void delete(String key) { 
         
-        sendMessage(protocol.getDeleteAction(), key, null).equals("ok");       
+        sendMessage(protocol.getDeleteAction(), key, null, null);       
     }
 
     /**
@@ -128,15 +140,15 @@ public class CacheClient {
      * @param data TODO
      * @return TODO
      */
-    private String sendMessage(String action, String key, String data) {
+    private String sendMessage(String action, String key, String data, Integer timeout) {
         
         String response = null;
         try {
             
             getConnection();
             
-            writeMessage(protocol.buildMessage(action, key, data));
-            response = protocol.parseResponse(readMessage());
+            writeMessage(protocol.buildClientMessage(action, key, data, timeout));
+            response = protocol.parseServerResponse(readMessage());
             
             closeConnection();
             

@@ -28,7 +28,7 @@ public class SimpleProtocol extends BaseProtocol implements Protocol {
      * {@inheritDoc}
      */
     @Override
-    public String buildMessage(String action, String key, String data) {
+    public String buildClientMessage(String action, String key, String data, Integer timeout) {
         
         String message = action + " " + key;
         if (data != null) {
@@ -43,7 +43,7 @@ public class SimpleProtocol extends BaseProtocol implements Protocol {
      * @throws InvalidActionException 
      */
     @Override
-    public Message parseMessage(String message) throws InvalidActionException {
+    public Message parseClientMessage(String message) throws InvalidActionException {
         
         String[] parts = message.split("\\s+");
         
@@ -51,7 +51,7 @@ public class SimpleProtocol extends BaseProtocol implements Protocol {
         String key = parts[1];        
         String value = (parts.length > 2) ? joinParts(parts) : null;
         
-        return new Message(action, key, value, this);
+        return new Message(action, key, value, null, this);
     }
  
     /**

@@ -61,16 +61,16 @@ public abstract class BaseProtocol implements Protocol {
      * @throws InvalidActionException 
      */
     @Override
-    public String buildResponse(Message message) throws InvalidActionException {
+    public String buildServerResponse(Message message) throws InvalidActionException {
 
-    	return message.execute(message);
+    	return message.execute();
     }
     
     /**
      * {@inheritDoc}
      */
     @Override
-    public String parseResponse(String response) {
+    public String parseServerResponse(String response) {
         
     	if (response.equals("<null>")) {
             return null;

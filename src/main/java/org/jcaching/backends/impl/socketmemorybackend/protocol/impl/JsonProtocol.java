@@ -27,9 +27,9 @@ public class JsonProtocol extends BaseProtocol implements Protocol {
      * {@inheritDoc}
      */
     @Override
-    public String buildMessage(String action, String key, String data) {
+    public String buildClientMessage(String action, String key, String data, Integer timeout) {
     	
-    	GsonMessage gsonMessage = new GsonMessage(action, key, data);
+    	GsonMessage gsonMessage = new GsonMessage(action, key, data, timeout);
     	return new Gson().toJson(gsonMessage) + "\n";
     }
 
@@ -38,9 +38,9 @@ public class JsonProtocol extends BaseProtocol implements Protocol {
      * @throws InvalidActionException 
      */
     @Override
-    public Message parseMessage(String message) throws InvalidActionException {
+    public Message parseClientMessage(String message) throws InvalidActionException {
         
     	GsonMessage gsonMessage = new Gson().fromJson(message, GsonMessage.class);
-    	return new Message(gsonMessage.getAction(), gsonMessage.getKey(), gsonMessage.getData(), this);
+    	return new Message(gsonMessage.getAction(), gsonMessage.getKey(), gsonMessage.getData(), gsonMessage.getTimeout(), this);
     }
 }

@@ -109,4 +109,22 @@ public class SocketMemoryBackendTest {
         TestCase.assertEquals(person.getName(), cachedPerson.getName());
         TestCase.assertEquals(person.getAge(), cachedPerson.getAge());
     }
+    
+    @Test
+    public void testCacheTimeoutOkGet() {
+        
+        cache.set("key-1", "test value", 1);
+        TestCase.assertEquals("test value", cache.get("key-1")
+        );
+    }
+    
+    @Test
+    public void testCacheTimeoutExpiredGet() throws InterruptedException {
+        
+        cache.set("key-1", "test value", 0);       
+        Thread.sleep(1000);
+        
+        TestCase.assertEquals(null, cache.get("key-1")
+        );
+    }
 }

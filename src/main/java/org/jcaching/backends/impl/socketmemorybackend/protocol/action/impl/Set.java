@@ -7,6 +7,7 @@
 package org.jcaching.backends.impl.socketmemorybackend.protocol.action.impl;
 
 import org.jcaching.backends.impl.socketmemorybackend.protocol.Message;
+import org.jcaching.backends.impl.socketmemorybackend.protocol.TimedObject;
 import org.jcaching.backends.impl.socketmemorybackend.protocol.action.Action;
 import org.jcaching.backends.impl.socketmemorybackend.server.Storage;
 
@@ -27,8 +28,9 @@ public class Set implements Action {
      */
     @Override
     public String execute(Message message) {
-
-        Storage.getInstance().set(message.getKey(), message.getValue());
+    	    	
+    	TimedObject timedObject = new TimedObject(message.getValue(), message.getTimeout()); 
+        Storage.getInstance().set(message.getKey(), timedObject);
         return "ok";
     }
 

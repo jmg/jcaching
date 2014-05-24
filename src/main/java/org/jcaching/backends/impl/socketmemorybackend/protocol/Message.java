@@ -16,7 +16,8 @@ public class Message {
         
     private Action action;
     private String key;
-    private String value;       
+    private String value;
+	private Integer timeout;       
     
     /**
      * Constructor.
@@ -26,11 +27,12 @@ public class Message {
      * @param value TODO
      * @throws InvalidActionException 
      */
-    public Message(String action, String key, String value, Protocol protocol) throws InvalidActionException {
+    public Message(String action, String key, String value, Integer timeout, Protocol protocol) throws InvalidActionException {
         super();
                 
         this.key = key;
         this.value = value;        
+        this.timeout = timeout;
         this.action = this.setAction(action, protocol);        
     }    
 
@@ -78,6 +80,24 @@ public class Message {
     public Action getAction() {
         return action;
     }
+    
+    /**
+     * TODO
+     *
+     * @param value TODO
+     */
+    public void setTimeout(Integer timeout) {
+        this.timeout = timeout;
+    }
+
+    /**
+     * TODO
+     *
+     * @return TODO
+     */
+    public Integer getTimeout() {
+        return timeout;
+    }
 
     /**
      * TODO
@@ -92,9 +112,9 @@ public class Message {
         return protocol.getAction(action);
     }
 
-    public String execute(Message message) throws InvalidActionException {
+    public String execute() throws InvalidActionException {
         
-        return getAction().execute(message);
+        return getAction().execute(this);
     }
     
 }

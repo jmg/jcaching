@@ -23,7 +23,7 @@ public interface Protocol {
      * @return TODO
      * @throws InvalidActionException TODO
      */
-    String buildMessage(String action, String key, String data) throws InvalidActionException;
+    String buildClientMessage(String action, String key, String data, Integer timeout) throws InvalidActionException;
 
     /**
      * TODO
@@ -32,7 +32,7 @@ public interface Protocol {
      * @return TODO
      * @throws InvalidActionException TODO
      */
-    String buildResponse(Message message) throws InvalidActionException;
+    String buildServerResponse(Message message) throws InvalidActionException;
 
     /**
      * TODO
@@ -40,7 +40,7 @@ public interface Protocol {
      * @param message TODO
      * @return TODO
      */
-    String parseResponse(String message);
+    String parseServerResponse(String message);
 
     /**
      * TODO
@@ -49,7 +49,7 @@ public interface Protocol {
      * @return TODO
      * @throws InvalidActionException 
      */
-    Message parseMessage(String message) throws InvalidActionException;    
+    Message parseClientMessage(String message) throws InvalidActionException;    
     
     /**
      * TODO

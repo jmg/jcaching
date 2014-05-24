@@ -5,12 +5,14 @@ public class GsonMessage {
 	private String action;
 	private String key;
 	private String data;
-	
-	public GsonMessage(String action, String key, String data) {
+	private Integer timeout;
+		
+	public GsonMessage(String action, String key, String data, Integer timeout) {
 		super();
 		this.action = action;
 		this.key = key;
 		this.data = data;
+		this.timeout = timeout;
 	}
 	public String getAction() {
 		return action;
@@ -29,5 +31,11 @@ public class GsonMessage {
 	}
 	public void setData(String data) {
 		this.data = data;
+	}
+	public Integer getTimeout() {
+		return timeout;
+	}
+	public void setTimeout(Integer timeout) {
+		this.timeout = timeout;
 	}
 }

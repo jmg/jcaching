@@ -55,8 +55,8 @@ public class ClientConnection extends Thread {
         Message message;
         try {
             
-            message = protocol.parseMessage(readMessage());
-            writeMessage(protocol.buildResponse(message));          
+            message = protocol.parseClientMessage(readMessage());            
+            writeMessage(protocol.buildServerResponse(message));          
             closeConnection();
             
         } catch (IOException e) {

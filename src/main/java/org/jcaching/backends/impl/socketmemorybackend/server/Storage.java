@@ -8,11 +8,13 @@ package org.jcaching.backends.impl.socketmemorybackend.server;
 
 import java.util.HashMap;
 
+import org.jcaching.backends.impl.socketmemorybackend.protocol.TimedObject;
+
 
 /**
  * TODO
  */
-public class Storage extends HashMap<String, String> {
+public class Storage extends HashMap<String, TimedObject> {
         
     private static final long serialVersionUID = -7691679274906679651L;    
     private static Storage instance = null;
@@ -32,7 +34,7 @@ public class Storage extends HashMap<String, String> {
      * @param key TODO
      * @param value TODO
      */
-    public void set(String key, String value) {
+    public void set(String key, TimedObject value) {
         
         super.put(key, value);
     }
@@ -44,8 +46,14 @@ public class Storage extends HashMap<String, String> {
      * @return TODO
      */
     public String get(String key) {
-            
-        return super.get(key);
+        
+    	TimedObject timedObject = super.get(key);
+    	if (timedObject == null || timedObject.expired()) {
+    		this.delete(key);
+    		return null;
+    	}
+    	
+        return timedObject.getValue();
     }
     
     /**
