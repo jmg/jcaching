@@ -10,25 +10,29 @@ import org.jcaching.exception.ImplementationClassLoadException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public abstract class BaseFactory {
-
+public abstract class BaseFactory<T> {
+	
+	T type;
 	protected Configuration configuration;
 	private Logger logger;
 
 	public BaseFactory(Configuration configuration) {		
-		
+				
 		this.configuration = configuration;		
 		logger = LoggerFactory.getLogger(this.getClass());		
 	}
 	
-	protected Object getInstance(Class<?> clazz) throws NoSuchMethodException, SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {		
+	protected abstract String getConfigurationKey();
+	
+	protected T instantiate(Class<?> clazz) throws NoSuchMethodException, SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {		
 	 
 		Constructor<?> constructor = clazz.getConstructor();
-		return constructor.newInstance();
+		return (T) constructor.newInstance();
 	}
 
-	public Object getObjectInstance(String configurationKey) throws ImplementationClassLoadException {			
-	
+	public T getObjectInstance() throws ImplementationClassLoadException {			
+		
+		String configurationKey = this.getConfigurationKey();
 	    String className =
 	        configuration.getString(configurationKey, null);
 	
@@ -42,11 +46,11 @@ public abstract class BaseFactory {
 	    logger.info("Creating instance for configured class {}",
 	        className);
 	
-	    Object instance = null;
+	    T instance = null;
 	
 	    try {
 	        Class<?> clazz = ClassUtils.getClass(className);			
-	        instance = getInstance(clazz);
+	        instance = instantiate(clazz);
 	
 	    } catch (Exception e) {
 	        throw new ImplementationClassLoadException(
@@ -57,6 +61,6 @@ public abstract class BaseFactory {
 	
 	    logger.info("Instance created successful :)");
 	    return instance;
-	}
+	}	
 
 }
