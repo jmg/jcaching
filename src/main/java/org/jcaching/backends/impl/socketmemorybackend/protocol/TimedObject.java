@@ -43,6 +43,11 @@ public class TimedObject {
 
 	public boolean expired() {
 		
+		if (this.timeout == null) {
+			logger.debug("object has not timeout");
+			return false;
+		}
+		
 		Long now = getSecondsNow();
 		
 		logger.debug("Object cached + timeout {}", this.cachedAt + this.timeout);
