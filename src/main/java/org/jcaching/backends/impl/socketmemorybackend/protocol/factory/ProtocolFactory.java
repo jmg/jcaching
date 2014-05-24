@@ -20,8 +20,8 @@ public class ProtocolFactory<T extends Protocol> extends BaseFactory<T> {
      *
      * @param configuration TODO
      */
-    public ProtocolFactory(Configuration configuration) {
-        super(configuration);
+    public ProtocolFactory(Class<T> t, Configuration configuration) {
+        super(t, configuration);
     }
 
 	@Override

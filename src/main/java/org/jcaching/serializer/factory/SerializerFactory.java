@@ -6,9 +6,9 @@ import org.jcaching.serializer.Serializer;
 
 public class SerializerFactory<T extends Serializer> extends BaseFactory<T> {
 		
-	public SerializerFactory(Configuration configuration) {
+	public SerializerFactory(Class<T> t, Configuration configuration) {
 		
-		super(configuration);
+		super(t, configuration);
 	}
 	
 	@Override

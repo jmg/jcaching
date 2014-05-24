@@ -32,7 +32,7 @@ public class SocketMemoryBackend extends BaseCacheBackend implements
         super(configuration);
         client = new CacheClient(configuration);
         
-        SerializerFactory<Serializer> factory = new SerializerFactory<Serializer>(configuration);
+        SerializerFactory<Serializer> factory = new SerializerFactory<Serializer>(Serializer.class, configuration);
         serializer = factory.getObjectInstance();
     }        
 

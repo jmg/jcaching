@@ -1,7 +1,6 @@
 package org.jcaching.factory;
 
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.lang.ClassUtils;
@@ -12,22 +11,23 @@ import org.slf4j.LoggerFactory;
 
 public abstract class BaseFactory<T> {
 	
-	T type;
+	protected Class<T> type;
 	protected Configuration configuration;
 	private Logger logger;
 
-	public BaseFactory(Configuration configuration) {		
-				
+	public BaseFactory(Class<T> t, Configuration configuration) {		
+			
+		this.type = t;
 		this.configuration = configuration;		
 		logger = LoggerFactory.getLogger(this.getClass());		
 	}
 	
 	protected abstract String getConfigurationKey();
 	
-	protected T instantiate(Class<?> clazz) throws NoSuchMethodException, SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {		
+	protected T instantiate(Class<?> clazz) throws Exception {		
 	 
 		Constructor<?> constructor = clazz.getConstructor();
-		return (T) constructor.newInstance();
+		return this.type.cast(constructor.newInstance());
 	}
 
 	public T getObjectInstance() throws ImplementationClassLoadException {			

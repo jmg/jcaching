@@ -68,7 +68,7 @@ public class CacheDeamon {
         port = configuration.getInt(CONFIGURATION_PORT_KEY,
                 CONFIGURATION_PORT_DEFAULT_VALUE);
 
-        ProtocolFactory<Protocol> factory = new ProtocolFactory<Protocol>(configuration);
+        ProtocolFactory<Protocol> factory = new ProtocolFactory<Protocol>(Protocol.class, configuration);
         protocol = factory.getObjectInstance();
     }
 
