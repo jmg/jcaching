@@ -75,8 +75,8 @@ public class CacheClient {
      */
     public void initialize() throws ImplementationClassLoadException {
         
-        ProtocolFactory factory = new ProtocolFactory(configuration);
-        protocol = factory.getProtocolInstance();
+        ProtocolFactory<Protocol> factory = new ProtocolFactory<Protocol>(configuration);
+        protocol = factory.getObjectInstance();
 
         port = configuration.getInteger(CacheDeamon.CONFIGURATION_PORT_KEY,
             CacheDeamon.CONFIGURATION_PORT_DEFAULT_VALUE);
