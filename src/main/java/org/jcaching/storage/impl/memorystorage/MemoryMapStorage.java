@@ -4,25 +4,27 @@
  * TODO Description if available.
  */
 
-package org.jcaching.backends.impl.socketmemorybackend.server;
+package org.jcaching.storage.impl.memorystorage;
 
 import java.util.HashMap;
 
-import org.jcaching.backends.impl.socketmemorybackend.protocol.TimedObject;
+import org.jcaching.storage.StorageBackend;
+import org.jcaching.storage.StorageObject;
+
 
 
 /**
  * TODO
  */
-public class Storage extends HashMap<String, TimedObject> {
+public class MemoryMapStorage extends HashMap<String, StorageObject> implements StorageBackend {
         
     private static final long serialVersionUID = -7691679274906679651L;    
-    private static Storage instance = null;
+    private static MemoryMapStorage instance = null;
     
-    public static Storage getInstance() {
+    public static MemoryMapStorage getInstance() {
         
         if (instance == null) {
-            instance = new Storage();
+            instance = new MemoryMapStorage();
         }
         
         return instance;
@@ -34,7 +36,8 @@ public class Storage extends HashMap<String, TimedObject> {
      * @param key TODO
      * @param value TODO
      */
-    public void set(String key, TimedObject value) {
+    @Override
+    public void set(String key, StorageObject value) {
         
         super.put(key, value);
     }
@@ -45,22 +48,27 @@ public class Storage extends HashMap<String, TimedObject> {
      * @param key TODO
      * @return TODO
      */
+    @Override
     public String get(String key) {
         
-    	TimedObject timedObject = super.get(key);
-    	if (timedObject == null || timedObject.expired()) {
+    	StorageObject storageObject = super.get(key);
+    	if (storageObject == null) {
+    		return null;
+    	}    	
+    	else if (storageObject.expired()) {
     		this.delete(key);
     		return null;
     	}
     	
-        return timedObject.getValue();
+        return storageObject.getValue();
     }
-    
+
     /**
      * TODO
      *
      * @param key TODO
      */
+    @Override
     public void delete(String key) {
         
         super.remove(key);

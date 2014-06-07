@@ -7,9 +7,9 @@
 package org.jcaching.backends.impl.socketmemorybackend.protocol.action.impl;
 
 import org.jcaching.backends.impl.socketmemorybackend.protocol.Message;
-import org.jcaching.backends.impl.socketmemorybackend.protocol.TimedObject;
 import org.jcaching.backends.impl.socketmemorybackend.protocol.action.Action;
-import org.jcaching.backends.impl.socketmemorybackend.server.Storage;
+import org.jcaching.storage.impl.memorystorage.MemoryMapStorage;
+import org.jcaching.storage.impl.memorystorage.TimedObject;
 
 /**
  * TODO description
@@ -30,7 +30,7 @@ public class Set implements Action {
     public String execute(Message message) {
     	    	
     	TimedObject timedObject = new TimedObject(message.getValue(), message.getTimeout()); 
-        Storage.getInstance().set(message.getKey(), timedObject);
+        MemoryMapStorage.getInstance().set(message.getKey(), timedObject);
         return "ok";
     }
 

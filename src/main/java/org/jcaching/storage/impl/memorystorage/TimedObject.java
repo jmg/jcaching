@@ -1,12 +1,12 @@
-package org.jcaching.backends.impl.socketmemorybackend.protocol;
+package org.jcaching.storage.impl.memorystorage;
 
 import java.util.Date;
 
+import org.jcaching.storage.StorageObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
-public class TimedObject {
+public class TimedObject implements StorageObject {
 
 	private String value;
 	private Integer timeout;
@@ -20,7 +20,8 @@ public class TimedObject {
 		this.cachedAt = getSecondsNow();
 		this.logger = LoggerFactory.getLogger(this.getClass());
 	}
-
+	
+	@Override
 	public String getValue() {
 		return value;
 	}
@@ -40,7 +41,8 @@ public class TimedObject {
 	private Long getSecondsNow() {
 		return new Date().getTime() / 1000;
 	}
-
+	
+	@Override
 	public boolean expired() {
 		
 		if (this.timeout == null) {
