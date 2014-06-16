@@ -21,7 +21,7 @@ import com.google.gson.Gson;
  * Implements a cache backend using the file system to store the content: files
  * as key containers and content as values.
  */
-class FileCacheBackend extends BaseCacheBackend implements CacheBackend {
+public class FileCacheBackend extends BaseCacheBackend implements CacheBackend {
 
     /**
      * The configuration key containing the value about the storage path name to

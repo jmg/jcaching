@@ -4,9 +4,7 @@
  * TODO Description if available.
  */
 
-package org.jcaching.backends.impl;
-
-import junit.framework.TestCase;
+package org.jcaching.backends.impl.filecachebackend;
 
 import org.junit.After;
 import org.junit.Before;
@@ -14,6 +12,9 @@ import org.junit.Test;
 
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
+/**
+ * TODO description
+ */
 public class FileCacheBackendTestCase {
 
     /**
@@ -22,18 +23,10 @@ public class FileCacheBackendTestCase {
     public FileCacheBackendTestCase() {
     }
 
-    /**
-     * {@inheritDoc}
-     * @see TestCase#setUp()
-     */
     @Before
     public void setUp() {
     }
 
-    /**
-     * {@inheritDoc}
-     * @see TestCase#tearDown()
-     */
     @After
     public void tearDown() {
         throw new NotImplementedException();
@@ -43,7 +36,7 @@ public class FileCacheBackendTestCase {
      * TODO
      */
     @Test
-    public void testSetOk() {
+    public void testSet() {
         throw new NotImplementedException();
     }
 }
