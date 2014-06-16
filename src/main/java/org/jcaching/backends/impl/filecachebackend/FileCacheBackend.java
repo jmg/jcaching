@@ -6,6 +6,7 @@
 package org.jcaching.backends.impl.filecachebackend;
 
 import java.io.File;
+import java.io.IOException;
 
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.io.FileUtils;
@@ -26,8 +27,8 @@ class FileCacheBackend extends BaseCacheBackend implements CacheBackend {
      * The configuration key containing the value about the storage path name to
      * use.
      */
-    public static final String STORAGE_PATH_KEY = "jcaching.filebackend." +
-        "storagePath";
+    public static final String STORAGE_PATH_KEY = "jcaching.filebackend."
+            + "storagePath";
 
     /**
      * The default value for storage path configuration.
@@ -48,9 +49,8 @@ class FileCacheBackend extends BaseCacheBackend implements CacheBackend {
      */
     public FileCacheBackend(Configuration configuration) {
         super(configuration);
-        storagePath = configuration.getString(
-            STORAGE_PATH_KEY, STORAGE_PATH_DEFAULT
-        );
+        storagePath = configuration.getString(STORAGE_PATH_KEY,
+                STORAGE_PATH_DEFAULT);
     }
 
     /**
@@ -73,10 +73,15 @@ class FileCacheBackend extends BaseCacheBackend implements CacheBackend {
      */
     @Override
     public void set(String key, Object value, int timeout) {
-        MetaObject meta = new MetaObject("", timeout);  // TODO serialize value to string
+        MetaObject meta = new MetaObject("", timeout); // TODO serialize value to string
         Gson gson = new Gson();
         File f = new File(FilenameUtils.concat(storagePath, key));
-        FileUtils.writeStringToFile(f, gson.toJson(meta));
+        try {
+            FileUtils.writeStringToFile(f, gson.toJson(meta));
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
     /**

@@ -8,19 +8,25 @@ package org.jcaching.backends.impl;
 
 import junit.framework.TestCase;
 
-public class FileCacheBackendTestCase extends TestCase {
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+
+public class FileCacheBackendTestCase {
 
     /**
      * Default constructor.
      */
     public FileCacheBackendTestCase() {
-        super();
     }
 
     /**
      * {@inheritDoc}
      * @see TestCase#setUp()
      */
+    @Before
     public void setUp() {
     }
 
@@ -28,13 +34,17 @@ public class FileCacheBackendTestCase extends TestCase {
      * {@inheritDoc}
      * @see TestCase#tearDown()
      */
+    @After
     public void tearDown() {
+        throw new NotImplementedException();
     }
 
     /**
      * TODO
      */
+    @Test
     public void testSetOk() {
+        throw new NotImplementedException();
     }
 }
 
