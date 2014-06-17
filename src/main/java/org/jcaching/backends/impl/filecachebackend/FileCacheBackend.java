@@ -74,8 +74,12 @@ public class FileCacheBackend extends BaseCacheBackend implements CacheBackend {
     @Override
     public void set(String key, Object value, int timeout) {
         MetaObject meta = new MetaObject("", timeout); // TODO serialize value to string
+        
         Gson gson = new Gson();
+        
         File f = new File(FilenameUtils.concat(storagePath, key));
+        f.mkdirs();  // Creates multiple subdirectory levels if required
+
         try {
             FileUtils.writeStringToFile(f, gson.toJson(meta));
         } catch (IOException e) {
