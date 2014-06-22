@@ -14,6 +14,8 @@ import org.apache.commons.io.FilenameUtils;
 import org.jcaching.backends.CacheBackend;
 import org.jcaching.backends.impl.BaseCacheBackend;
 import org.jcaching.backends.impl.filecachebackend.storage.MetaObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.google.gson.Gson;
 
@@ -22,7 +24,7 @@ import com.google.gson.Gson;
  * as key containers and content as values.
  */
 public class FileCacheBackend extends BaseCacheBackend implements CacheBackend {
-
+ 
     /**
      * The configuration key containing the value about the storage path name to
      * use.
@@ -40,6 +42,10 @@ public class FileCacheBackend extends BaseCacheBackend implements CacheBackend {
      */
     public static final int NO_TIMEOUT = 0;
 
+    private static final Logger logger = LoggerFactory.getLogger(
+        FileCacheBackend.class
+    );
+
     private String storagePath;
 
     /**
@@ -49,8 +55,31 @@ public class FileCacheBackend extends BaseCacheBackend implements CacheBackend {
      */
     public FileCacheBackend(Configuration configuration) {
         super(configuration);
-        storagePath = configuration.getString(STORAGE_PATH_KEY,
-                STORAGE_PATH_DEFAULT);
+        initialize();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * <p>Other tasks performed:<p>
+     *
+     * <ul>
+     *   <li>Creation of storage directory.</li>
+     * </ul>
+     *
+     * @see CacheBackend#initialize()
+     */
+    public void initialize() {
+        super.initialize();
+
+        storagePath = configuration.getString(
+            STORAGE_PATH_KEY, STORAGE_PATH_DEFAULT
+        );
+
+        File f = new File(storagePath);
+        if (!f.exists()) {
+            f.mkdirs();  // Creates multiple subdirectory levels if required
+        }
     }
 
     /**
@@ -76,9 +105,8 @@ public class FileCacheBackend extends BaseCacheBackend implements CacheBackend {
         MetaObject meta = new MetaObject("", timeout); // TODO serialize value to string
         
         Gson gson = new Gson();
-        
+
         File f = new File(FilenameUtils.concat(storagePath, key));
-        f.mkdirs();  // Creates multiple subdirectory levels if required
 
         try {
             FileUtils.writeStringToFile(f, gson.toJson(meta));
@@ -93,7 +121,10 @@ public class FileCacheBackend extends BaseCacheBackend implements CacheBackend {
      */
     @Override
     public Object get(String key) {
-        File f = new File(FilenameUtils.concat(storagePath, key));
+        String path = FilenameUtils.concat(storagePath, key);
+        logger.debug("Fetching data for key={} in path={}", key, path);
+
+        File f = new File(path);
         Gson gson = new Gson();
         MetaObject meta = null;  // TODO load file content
         gson.fromJson(meta.getValue(), MetaObject.class);
