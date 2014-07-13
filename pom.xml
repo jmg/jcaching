@@ -6,7 +6,7 @@
 	<packaging>jar</packaging>
 	<version>1.0-SNAPSHOT</version>
 	<name>jcaching</name>
-	<url>http://maven.apache.org</url>
+	<url>https://github.com/jmg/jcaching</url>
 	<dependencies>
 		<dependency>
 			<groupId>org.slf4j</groupId>
