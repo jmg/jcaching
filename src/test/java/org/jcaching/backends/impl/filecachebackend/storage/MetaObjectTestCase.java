@@ -76,7 +76,9 @@ public class MetaObjectTestCase {
      */
     @Test
     public void testIsInvalid() {
-        MetaObject mo = new MetaObject(value, timeout, calendar);
+        MetaObject mo = new MetaObject(
+            value, value.getClass().getCanonicalName(), timeout, calendar
+        );
         Assert.assertEquals(expected, mo.isInvalid());
     }
 }

@@ -3,10 +3,12 @@
  *
  * The file system cache backend implementation.
  */
+
 package org.jcaching.backends.impl.filecachebackend;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.io.FileUtils;
@@ -17,14 +19,16 @@ import org.jcaching.backends.impl.filecachebackend.storage.MetaObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.common.base.Joiner;
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 
 /**
  * Implements a cache backend using the file system to store the content: files
  * as key containers and content as values.
  */
 public class FileCacheBackend extends BaseCacheBackend implements CacheBackend {
- 
+
     /**
      * The configuration key containing the value about the storage path name to
      * use.
@@ -35,16 +39,15 @@ public class FileCacheBackend extends BaseCacheBackend implements CacheBackend {
     /**
      * The default value for storage path configuration.
      */
-    public static final String STORAGE_PATH_DEFAULT = "./storage";
+    public static final String STORAGE_PATH_DEFAULT = "storage";
 
     /**
      * The timeout value to indicate that indeed timeout is not required.
      */
     public static final int NO_TIMEOUT = 0;
 
-    private static final Logger logger = LoggerFactory.getLogger(
-        FileCacheBackend.class
-    );
+    private static final Logger logger = LoggerFactory
+            .getLogger(FileCacheBackend.class);
 
     private String storagePath;
 
@@ -72,13 +75,13 @@ public class FileCacheBackend extends BaseCacheBackend implements CacheBackend {
     public void initialize() {
         super.initialize();
 
-        storagePath = configuration.getString(
-            STORAGE_PATH_KEY, STORAGE_PATH_DEFAULT
-        );
+        storagePath = configuration.getString(STORAGE_PATH_KEY,
+                STORAGE_PATH_DEFAULT);
 
         File f = new File(storagePath);
         if (!f.exists()) {
-            f.mkdirs();  // Creates multiple subdirectory levels if required
+            logger.info("Creating storage directory: {}", storagePath);
+            f.mkdirs(); // Creates multiple subdirectory levels if required
         }
     }
 
@@ -102,18 +105,23 @@ public class FileCacheBackend extends BaseCacheBackend implements CacheBackend {
      */
     @Override
     public void set(String key, Object value, int timeout) {
-        MetaObject meta = new MetaObject("", timeout); // TODO serialize value to string
-        
+        logger.debug("Key={}, value={}, class={}, timeout={}", key, value,
+                value.getClass().getCanonicalName(), timeout);
+
         Gson gson = new Gson();
+        MetaObject meta = new MetaObject(gson.toJson(value), value.getClass()
+                .getCanonicalName(), timeout);
 
         File f = new File(FilenameUtils.concat(storagePath, key));
 
         try {
             FileUtils.writeStringToFile(f, gson.toJson(meta));
         } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            logger.error("Exception trying to write the key {} on storage {}:",
+                    key, storagePath, e);
         }
+
+        logger.debug("Key {} value was saved on storage.", key);
     }
 
     /**
@@ -122,13 +130,40 @@ public class FileCacheBackend extends BaseCacheBackend implements CacheBackend {
     @Override
     public Object get(String key) {
         String path = FilenameUtils.concat(storagePath, key);
-        logger.debug("Fetching data for key={} in path={}", key, path);
+        logger.debug("Fetching data for key={} in path={}", key, storagePath);
 
         File f = new File(path);
+        List<String> lines = null;
+
+        try {
+            lines = FileUtils.readLines(f, "UTF-8");
+        } catch (IOException e) {
+            logger.info("Key file {} cannot be open/found in storage path {}:",
+                    key, storagePath, e);
+            return null;
+        }
+
+        Joiner joiner = Joiner.on(" ").skipNulls();
         Gson gson = new Gson();
-        MetaObject meta = null;  // TODO load file content
-        gson.fromJson(meta.getValue(), MetaObject.class);
-        return null;  // TODO return deserialized object
+
+        MetaObject meta = gson.fromJson(joiner.join(lines), MetaObject.class);
+        logger.debug("Meta object fetched: {}", meta);
+
+        if (meta.isInvalid()) {
+            logger.info("Key content is invalid due to timeout.");
+            return null;
+        }
+
+        logger.debug("Deserializing object into class {}", meta.getClassName());
+
+        try {
+            return gson.fromJson(meta.getValue(),
+                    Class.forName(meta.getClassName()));
+        } catch (JsonSyntaxException | ClassNotFoundException e) {
+            logger.error("Exception trying to deserialize saved instance:", e);
+        }
+
+        return null;
     }
 
     /**
@@ -136,9 +171,16 @@ public class FileCacheBackend extends BaseCacheBackend implements CacheBackend {
      */
     @Override
     public void delete(String key) {
-        FileUtils.deleteQuietly(new File(
-            FilenameUtils.concat(storagePath, key)
-        ));
+        File f = new File(FilenameUtils.concat(storagePath, key));
+        
+        if (!f.exists()) {
+            logger.info(
+                "Key {} does not exists on storage; nothing to do.", key
+            );
+        }
+        
+        f.delete();
+        logger.info("Removed key {} from storage.", key);
     }
 }
 
